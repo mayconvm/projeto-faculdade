@@ -1,16 +1,17 @@
 <?php
 
-
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * AppBundle/Entity/User
+ * User
  *
  * @ORM\Table(name="user")
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-class AppBundle/Entity/User
+class User
 {
     /**
      * @var integer
@@ -29,5 +30,38 @@ class AppBundle/Entity/User
     private $nome;
 
 
-}
 
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set nome
+     *
+     * @param string $nome
+     *
+     * @return User
+     */
+    public function setNome($nome)
+    {
+        $this->nome = $nome;
+
+        return $this;
+    }
+
+    /**
+     * Get nome
+     *
+     * @return string
+     */
+    public function getNome()
+    {
+        return $this->nome;
+    }
+}
