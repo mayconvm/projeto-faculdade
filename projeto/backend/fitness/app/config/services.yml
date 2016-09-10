@@ -7,3 +7,12 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+  get_set_method_normalizer:
+      class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
+      public: false
+      tags:
+          - { name: serializer.normalizer }
+  
+  avaliacaoService:
+      class: Restapi\Service\AvaliacaoService
+      arguments: ["@doctrine.orm.entity_manager", 'Restapi\Entity\Avaliacao']
