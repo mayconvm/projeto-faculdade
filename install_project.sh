@@ -4,16 +4,18 @@
 sudo apt-get update
 sudo apt-get install -y unzip wget curl tree nmap vim git mysql-client mysql-server
 sudo apt-get install -y nginx
-sudo apt-get install -y php5-dev php5-curl php5-json php5-mysql php5-fpm
+sudo apt-get install -y php5-dev php5-curl php5-json php5-mysql php5-fpm php5-cli
 sudo apt-get remove -y apache2
 
+#SENHA PADRÃO MYSQL root
+
 # Configurando NGINX
-rm /etc/nginx/sites-available/default
-rm /etc/nginx/sites-enabled//default
-cp deploy/template/projeto-faculdade.nginx /etc/nginx/sites-enabled/projeto-faculdade
+sudo rm /etc/nginx/sites-available/default
+sudo rm /etc/nginx/sites-enabled//default
+sudo cp deploy/template/projeto-faculdade.nginx /etc/nginx/sites-enabled/projeto-faculdade
 
 #Configurando o php FPM
-cp deploy/template/www.conf.php5-fpm /etc/php5/fpm/pool.d/www.conf
+sudo cp deploy/template/www.conf.php-fpm /etc/php5/fpm/pool.d/www.conf
 
 #Instalar o Docker
 #curl -sSL https://get.docker.com/ | sh
@@ -24,15 +26,17 @@ cd $folderProject
 
 #install composer
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-php composer-setup.php --install-dir=/usr/bin --filename=composer
+sudo php composer-setup.php --install-dir=/usr/bin --filename=composer
 rm composer-setup.php
 
-composer global require "hirak/prestissimo:^0.3" --prefer-dist -vvv
+sudo chown $USER:$USER ~/.composer/ -R
+
+sudo composer global require "hirak/prestissimo:^0.3" --prefer-dist -vvv
 
 #install synfony
 curl -LsS https://symfony.com/installer -o symfony
 chmod a+x symfony
-mv symfony /usr/bin
+sudo mv symfony /usr/bin
 
 # Configurando o projeto
 git clone https://github.com/mayconvm/projeto-faculdade.git .
