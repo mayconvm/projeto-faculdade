@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Avaliacao
  *
- * @ORM\Table(name="avaliacao", uniqueConstraints={@ORM\UniqueConstraint(name="cod_cliente_UNIQUE", columns={"cod_cliente"}), @ORM\UniqueConstraint(name="cod_profissional_UNIQUE", columns={"cod_profissional"})})
+ * @ORM\Table(name="avaliacao", indexes={@ORM\Index(name="fk_profissional3", columns={"cod_profissional"}), @ORM\Index(name="fk_cliente3", columns={"cod_cliente"})})
  * @ORM\Entity
  */
-class Avaliacao extends AbstractEntity implements IEntity
+class Avaliacao
 {
     /**
      * @var integer

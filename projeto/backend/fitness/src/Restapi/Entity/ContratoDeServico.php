@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * ContratoDeServico
  *
- * @ORM\Table(name="contrato_de_servico", uniqueConstraints={@ORM\UniqueConstraint(name="idContrato_UNIQUE", columns={"id_contrato"}), @ORM\UniqueConstraint(name="cod_profissional_UNIQUE", columns={"cod_profissional"}), @ORM\UniqueConstraint(name="cod_cliente_UNIQUE", columns={"cod_cliente"}), @ORM\UniqueConstraint(name="cod_local_UNIQUE", columns={"cod_local"})}, indexes={@ORM\Index(name="fk_profissional_idx", columns={"cod_profissional"}), @ORM\Index(name="fk_cliente_idx", columns={"cod_cliente"}), @ORM\Index(name="fk_local_idx", columns={"cod_local"})})
+ * @ORM\Table(name="contrato_de_servico", uniqueConstraints={@ORM\UniqueConstraint(name="cod_local_UNIQUE", columns={"cod_local"})}, indexes={@ORM\Index(name="fk_profissional_idx", columns={"cod_profissional"}), @ORM\Index(name="fk_cliente_idx", columns={"cod_cliente"}), @ORM\Index(name="fk_local_idx", columns={"cod_local"})})
  * @ORM\Entity
  */
 class ContratoDeServico
