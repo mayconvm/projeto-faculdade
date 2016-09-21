@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Avaliacao
  *
- * @ORM\Table(name="avaliacao", indexes={@ORM\Index(name="fk_profissional3", columns={"cod_profissional"}), @ORM\Index(name="fk_cliente3", columns={"cod_cliente"})})
+ * @ORM\Table(name="avaliacao", indexes={@ORM\Index(name="fk_profissional3", columns={"id_profissional"}), @ORM\Index(name="fk_cliente3", columns={"id_cliente"})})
  * @ORM\Entity
  */
 class Avaliacao
@@ -40,20 +40,20 @@ class Avaliacao
      *
      * @ORM\ManyToOne(targetEntity="Restapi\Entity\Cliente")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="cod_cliente", referencedColumnName="id_cliente")
+     *   @ORM\JoinColumn(name="id_cliente", referencedColumnName="id_cliente")
      * })
      */
-    private $codCliente;
+    private $idCliente;
 
     /**
      * @var \Restapi\Entity\Profissional
      *
      * @ORM\ManyToOne(targetEntity="Restapi\Entity\Profissional")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="cod_profissional", referencedColumnName="id_profissional")
+     *   @ORM\JoinColumn(name="id_profissional", referencedColumnName="id_profissional")
      * })
      */
-    private $codProfissional;
+    private $idProfissional;
 
 
 
@@ -116,50 +116,50 @@ class Avaliacao
     }
 
     /**
-     * Set codCliente
+     * Set idCliente
      *
-     * @param \Restapi\Entity\Cliente $codCliente
+     * @param \Restapi\Entity\Cliente $idCliente
      *
      * @return Avaliacao
      */
-    public function setCodCliente(\Restapi\Entity\Cliente $codCliente = null)
+    public function setIdCliente(\Restapi\Entity\Cliente $idCliente = null)
     {
-        $this->codCliente = $codCliente;
+        $this->idCliente = $idCliente;
 
         return $this;
     }
 
     /**
-     * Get codCliente
+     * Get idCliente
      *
      * @return \Restapi\Entity\Cliente
      */
-    public function getCodCliente()
+    public function getIdCliente()
     {
-        return $this->codCliente;
+        return $this->idCliente;
     }
 
     /**
-     * Set codProfissional
+     * Set idProfissional
      *
-     * @param \Restapi\Entity\Profissional $codProfissional
+     * @param \Restapi\Entity\Profissional $idProfissional
      *
      * @return Avaliacao
      */
-    public function setCodProfissional(\Restapi\Entity\Profissional $codProfissional = null)
+    public function setIdProfissional(\Restapi\Entity\Profissional $idProfissional = null)
     {
-        $this->codProfissional = $codProfissional;
+        $this->idProfissional = $idProfissional;
 
         return $this;
     }
 
     /**
-     * Get codProfissional
+     * Get idProfissional
      *
      * @return \Restapi\Entity\Profissional
      */
-    public function getCodProfissional()
+    public function getIdProfissional()
     {
-        return $this->codProfissional;
+        return $this->idProfissional;
     }
 }

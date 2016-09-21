@@ -15,11 +15,11 @@ class Usuario
     /**
      * @var integer
      *
-     * @ORM\Column(name="idusuario", type="integer", nullable=false)
+     * @ORM\Column(name="id_usuario", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idusuario;
+    private $idUsuario;
 
     /**
      * @var string
@@ -152,13 +152,13 @@ class Usuario
 
 
     /**
-     * Get idusuario
+     * Get idUsuario
      *
      * @return integer
      */
-    public function getIdusuario()
+    public function getIdUsuario()
     {
-        return $this->idusuario;
+        return $this->idUsuario;
     }
 
     /**
