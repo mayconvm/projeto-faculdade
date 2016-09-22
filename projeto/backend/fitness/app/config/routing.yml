@@ -2,6 +2,10 @@ app:
     resource: "@AppBundle/Controller/"
     type:     annotation
 
-teste:
+Avaliacao:
     type:     rest
-    resource: \Restapi\Controller\TesteController
+    resource: \Restapi\Controller\AvaliacaoController
+
+Usuario:
+    type:     rest
+    resource: \Restapi\Controller\UsuarioController

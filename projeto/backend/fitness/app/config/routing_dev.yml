@@ -12,7 +12,3 @@ _errors:
 
 _main:
     resource: routing.yml
-
-teste:
-    type:     rest
-    resource: \Restapi\Controller\TesteController

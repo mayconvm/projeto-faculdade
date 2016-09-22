@@ -16,3 +16,7 @@ services:
   avaliacaoService:
       class: Restapi\Service\AvaliacaoService
       arguments: ["@doctrine.orm.entity_manager", 'Restapi\Entity\Avaliacao']
+
+  usuarioService:
+      class: Restapi\Service\UsuarioService
+      arguments: ["@doctrine.orm.entity_manager", 'Restapi\Entity\Usuario']
