@@ -9,9 +9,7 @@ interface IService {
 
     public function newEntity($data = null);
 
-    public function insertEntity();
-
-    public function update(IEntity $entity);
+    public function persistEntity(IEntity $entity);
 
     public function delete(IEntity $entity);
 
@@ -20,6 +18,4 @@ interface IService {
     public function getAll();
 
     public function getRepository();
-    
-    public function setRepository(IRepository $repository);
 }
