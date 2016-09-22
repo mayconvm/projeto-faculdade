@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="agendamento", uniqueConstraints={@ORM\UniqueConstraint(name="idAgendamento_UNIQUE", columns={"id_agendamento"})}, indexes={@ORM\Index(name="fk_profissional_idx", columns={"id_profissional"}), @ORM\Index(name="fk_cliente_idx", columns={"id_cliente"})})
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\Restapi\Repository\AgendamentoRepository")
  */
 class Agendamento
 {
