@@ -9,3 +9,11 @@ Avaliacao:
 Usuario:
     type:     rest
     resource: \Restapi\Controller\UsuarioController
+
+Agendamento:
+    type:     rest
+    resource: \Restapi\Controller\AgendamentoController
+
+ContratoDeServico:
+    type:     rest
+    resource: \Restapi\Controller\ContratoDeServicoController

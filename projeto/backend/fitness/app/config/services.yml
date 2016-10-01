@@ -20,3 +20,11 @@ services:
   usuarioService:
       class: Restapi\Service\UsuarioService
       arguments: ["@doctrine.orm.entity_manager", 'Restapi\Entity\Usuario']
+
+  agendamentoService:
+      class: Restapi\Service\AgendamentoService
+      arguments: ["@doctrine.orm.entity_manager", 'Restapi\Entity\Agendamento']
+
+  contratoDeServicoService:
+      class: Restapi\Service\ContratoDeServicoService
+      arguments: ["@doctrine.orm.entity_manager", 'Restapi\Entity\ContratoDeServico']
