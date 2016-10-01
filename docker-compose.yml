@@ -1,0 +1,55 @@
+#Exec docker-compose up -d
+version: '2'
+services:
+
+  webfrontend:
+    image: ubuntu:faculdade
+    build:
+      context: .
+      dockerfile: deploy/dockerfile-frontend
+    volumes:
+      - "./:/var/www/projeto/"
+    ports:
+      - "9091:80"
+    links:
+      - webbackend
+    container_name: faculdade-frontend
+    networks:
+      common:
+        ipv4_address: 172.18.0.4
+
+  webbackend:
+    image: ubuntu:faculdade
+    build:
+      context: .
+      dockerfile: deploy/dockerfile-backend
+    volumes:
+      - "./:/var/www/projeto/"
+    ports:
+      - "9090:80"
+    depends_on:
+      - mysql
+    links:
+      - mysql
+    container_name: faculdade-backend
+    networks:
+      common:
+        ipv4_address: 172.18.0.3
+
+  mysql:
+    image: mysql
+    container_name: faculdade-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=senha-projeto
+    networks:
+      common:
+        ipv4_address: 172.18.0.2
+
+networks:
+  common:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.18.0.0/24
+        gateway: 172.18.0.1
