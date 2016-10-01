@@ -1,0 +1,7 @@
+FROM ubuntu:faculdade
+WORKDIR .
+VOLUME ["/var/www/projeto"]
+MAINTAINER projeto-faculdade
+
+
+CMD service php5-fpm start && service nginx start && while true; do sleep 1000; done
