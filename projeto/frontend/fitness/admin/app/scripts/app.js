@@ -198,6 +198,24 @@ angular
    //////////////
 
    .state('dashboard.users',{
+      // controller:'usersController',
+      // templateUrl:'views/users/index.html',
+      resolve: {
+        loadMyFile:function($ocLazyLoad) {
+          // $ocLazyLoad.load({
+          //     name:'sbAdminApp',
+          //     files:[
+          //       'scripts/services/serviceRequestHttp.js',
+          //       'scripts/services/serviceUsers.js',
+          //       'scripts/controllers/usersController.js',
+
+          //     ]
+          // })
+        }
+      }
+   })
+
+   .state('dashboard.all_users',{
       controller:'usersController',
       templateUrl:'views/users/index.html',
       url:'/users',
@@ -208,18 +226,17 @@ angular
               files:[
                 'scripts/services/serviceRequestHttp.js',
                 'scripts/services/serviceUsers.js',
-                'scripts/controllers/usersController.js',
-
+                'scripts/controllers/users/usersController.js',
               ]
           })
         }
       }
    })
 
-   .state('dashboard.users_profissional',{
-      controller:'profissionalController',
-      templateUrl:'views/users/profissional/index.html',
-      url:'/users/profissional',
+   .state('dashboard.form_users',{
+      controller:'formUsersController',
+      templateUrl:'views/users/form.html',
+      url:'/users/form',
       resolve: {
         loadMyFile:function($ocLazyLoad) {
           $ocLazyLoad.load({
@@ -227,27 +244,7 @@ angular
               files:[
                 'scripts/services/serviceRequestHttp.js',
                 'scripts/services/serviceUsers.js',
-                'scripts/controllers/users/profissionalController.js',
-
-              ]
-          })
-        }
-      }
-   })
-
-   .state('dashboard.users_customers',{
-      controller:'customersController',
-      templateUrl:'views/users/customers/index.html',
-      url:'/users/customers',
-      resolve: {
-        loadMyFile:function($ocLazyLoad) {
-          $ocLazyLoad.load({
-              name:'sbAdminApp',
-              files:[
-                'scripts/services/serviceRequestHttp.js',
-                'scripts/services/serviceUsers.js',
-                'scripts/controllers/users/customersController.js',
-
+                'scripts/controllers/users/formUsersController.js',
               ]
           })
         }

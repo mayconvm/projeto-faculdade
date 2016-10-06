@@ -7,10 +7,10 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')
-  .controller('usersController', ['$scope', 'serviceReport', function($scope, $serviceReport) {
+  .controller('formUsersController', ['$scope', 'serviceUsers', function($scope, $serviceUsers) {
       
       $scope.listItens = [{}];
-      var service = $serviceReport;
+      var service = $serviceUsers;
 
       function init() {
         service.getAll(function(data) {

@@ -7,7 +7,7 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')
-  .controller('customersController', ['$scope', 'serviceUsers', function($scope, $serviceUsers) {
+  .controller('usersController', ['$scope', 'serviceUsers', function($scope, $serviceUsers) {
       
       $scope.listItens = [{}];
       var service = $serviceUsers;
