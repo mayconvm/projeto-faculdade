@@ -1,49 +1,58 @@
 server {
     listen   80;
  
-    root /var/www/projeto/projeto/frontend/fitness/;
-    index index.html index.htm;
-
-    server_name _;
-
-    location / {
-            try_files $uri $uri/ /index.html;
-    }
-
-    error_page 404 /404.html;
-
-    error_page 500 502 503 504 /50x.html;
-    location = /50x.html {
-          root /usr/share/nginx/www;
-    }
-}
-
-server {
-    listen   80;
- 
     root /var/www/projeto/projeto/backend/fitness/web/;
     index app_dev.php app.php index.php index.html index.htm;
 
     server_name api.fitness;
 
     location / {
-            try_files $uri $uri/
-            rewrite ^(.*)$ $1
+        if ($request_method = 'OPTIONS') {
+            more_set_headers 'Access-Control-Allow-Origin: $http_origin';
+            more_set_headers 'Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE, HEAD';
+            more_set_headers 'Access-Control-Max-Age: 1728000';
+            more_set_headers 'Access-Control-Allow-Credentials: true';
+            more_set_headers 'Access-Control-Allow-Headers: Origin,Content-Type,Accept,Authorization';
+            more_set_headers 'Content-Type: text/plain; charset=UTF-8';
+            more_set_headers 'Content-Length: 0';
+            return 204;
+        }
+
+	   try_files $uri /app_dev.php$is_args$args;
+    }
+
+
+    error_page 500 502 503 504 /50x.html;
+    #location = /50x.html {
+    #      root /usr/share/nginx/www;
+    #}
+
+    # pass the PHP scripts to FastCGI server listening on /var/run/php5-fpm.sock
+
+
+
+
+    location ~ \.php$ {
+
+        more_set_headers 'Access-Control-Allow-Origin: $http_origin';
+        more_set_headers 'Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE, HEAD';
+        more_set_headers 'Access-Control-Allow-Credentials: true';
+        more_set_headers 'Access-Control-Allow-Headers: Origin,Content-Type,Accept,Authorization';
+
+          try_files $uri =404;
+            fastcgi_pass unix:/var/run/php5-fpm.sock;
+            fastcgi_index app_dev.php;
+        #    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            include fastcgi_params;
+	fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        fastcgi_param DOCUMENT_ROOT $realpath_root;
+
+	fastcgi_split_path_info ^(.+\.php)(/.*)$;
     }
 
     error_page 404 /404.html;
 
-    error_page 500 502 503 504 /50x.html;
-    location = /50x.html {
-          root /usr/share/nginx/www;
-    }
-
-    # pass the PHP scripts to FastCGI server listening on /var/run/php5-fpm.sock
-    location ~ \.php$ {
-            try_files $uri =404;
-            fastcgi_pass unix:/var/run/php5-fpm.sock;
-            fastcgi_index index.php;
-            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-            include fastcgi_params;
-    }
+    #error_log /var/log/nginx/project_error.log;
+    #access_log /var/log/nginx/project_access.log;
 }
+
