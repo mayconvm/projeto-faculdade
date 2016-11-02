@@ -1,0 +1,26 @@
+FORMULÁRIOS:
+ ✔ Formulário agendamento @done (16-10-12 11:15)
+   ✔ Definir profissional @done (16-10-12 11:15)
+   ✔ Definir cliente @done (16-10-12 11:15)
+   ✔ Definir atividade @done (16-10-12 11:15)
+   ✔ Local @done (16-10-12 11:15)
+   ✔ Quando e a Duração da aula @done (16-10-12 11:19)
+ ✔ Formulário de avaliação @done (16-10-12 11:31)
+ ✔ Formulário de contrato @done (16-10-12 11:34)
+ ☐ FAQ
+
+REGISTROS:
+  ☐ Cadastro de usuário
+    ☐ Profissional
+    ☐ Cliente
+  ☐ Registrar um agendamento
+  ☐ Fechar contrato
+  ☐ Registrar avaliação
+  ☐ Cadastrar FAQ
+
+ATUALIZAÇÕES DO PROJETO:
+  backend:
+    sudo apt-get install nginx-extras
+    sudo timedatectl set-timezone America/Sao_Paulo
+      Caso não dê certo:
+          sudo dpkg-reconfigure tzdata -> 132
