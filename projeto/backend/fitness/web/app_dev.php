@@ -23,6 +23,7 @@ use Symfony\Component\Debug\Debug;
  */
 $loader = require __DIR__.'/../app/autoload.php';
 Debug::enable();
+date_default_timezone_set("America/Sao_Paulo");
 
 $kernel = new AppKernel('dev', true);
 $kernel->loadClassCache();
