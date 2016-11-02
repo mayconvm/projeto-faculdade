@@ -2,32 +2,30 @@
     <div class="sidebar-nav navbar-collapse">
         <ul class="nav in" id="side-menu">
             <sidebar-search></sidebar-search>
-            <!-- MENU SISTEMA -->
-            <!-- <li ui-sref-active="active">
-                <a ui-sref="users"><i class="fa fa-dashboard fa-fw"></i> Usuários</a>
-            </li>
-
-            <li ui-sref-active="active">
-                <a ui-sref="scheduler"><i class="fa fa-dashboard fa-fw"></i> Agendamento</a>
-            </li> -->
             
             <li ng-class="{active: collapseVar==1}">{{dropDown}}
                 <a href="" ng-click="check(1)"><i class="fa fa-wrench fa-fw"></i> Usuários<span
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level" collapse="collapseVar!=1">
-                    <li ui-sref-active="active"><!-- 
-                        <a ui-sref="dashboard.users_profissional">Profissionais</a>
-                    </li> -->
+                    <li ui-sref-active="active">
 
                     <li ui-sref-active="active">
-                        <a ui-sref="dashboard.all_users">Todos Usuários</a>
+                        <a ui-sref="dashboard.usuarios">Todos Usuários</a>
                     </li>
                 </ul>
             </li>
 
 
             <li ui-sref-active="active">
-                <a ui-sref="dashboard.report"><i class="fa fa-dashboard fa-fw"></i> Avaliação</a>
+                <a ui-sref="dashboard.avaliacao"><i class="fa fa-dashboard fa-fw"></i> Avaliação</a>
+            </li>
+
+            <li ui-sref-active="active">
+                <a ui-sref="dashboard.agendamento"><i class="fa fa-dashboard fa-fw"></i> Agendamento</a>
+            </li>
+
+            <li ui-sref-active="active">
+                <a ui-sref="dashboard.contrato"><i class="fa fa-dashboard fa-fw"></i> Contrato</a>
             </li>
 
 

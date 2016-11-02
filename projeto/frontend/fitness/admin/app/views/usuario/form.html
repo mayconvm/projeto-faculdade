@@ -21,7 +21,7 @@
                         <div class="col-md-offset-3 col-md-6">
                             <div class="form-group" ng-init="form.type = 2">
                                 <label>Tipo</label>
-                                <select ng-model="form.type" class="form-control">
+                                <select ng-model="form.type" class="form-control" required="">
                                     <option value="1">Cliente</option>
                                     <option value="2">Profissional</option>
                                 </select>
@@ -35,18 +35,18 @@
 
                             <div class="form-group">
                                 <label>Nome completo</label>
-                                <input type="text" ng-model="form.nome" class="form-control">
+                                <input type="text" ng-model="form.nome" class="form-control" min="3" max="120" step="1" required>
                             </div>
 
                             <div class="form-group">
                                 <label>Telefone</label>
-                                <input type="text" ng-model="form.telefone" class="form-control">
+                                <input type="text" ng-model="form.telefone" class="form-control" required>
                                 <p class="help-block">(xx) XXXXX-XXXX</p>
                             </div>
 
                             <div class="form-group">
                                 <label>Sexo</label>
-                                <select ng-model="form.sexo" class="form-control">
+                                <select ng-model="form.sexo" class="form-control" required>
                                     <option value="">Sexo</option>
                                     <option value="1">Masculino</option>
                                     <option value="2">Feminino</option>
@@ -55,13 +55,13 @@
 
                             <div class="form-group">
                                 <label>Data de nascimento</label>
-                                <input type="text" ng-model="form.data_nascimento" class="form-control">
+                                <input type="text" ng-model="form.data_nascimento" class="form-control" required>
                                 <p class="help-block">dd/mm/yyyy</p>
                             </div>
 
                             <div class="form-group">
                                 <label>E-mail <a href="https://pagseguro.com.br" target="_news">Pag-seguro</a> </label>
-                                <input type="email" ng-model="form.complemento" class="form-control">
+                                <input type="email" ng-model="form.pagseguro" class="form-control" required>
                             </div>
 
                             <div class="form-group" ng-if="form.type == 1">
@@ -106,14 +106,16 @@
                             <div class="form-group">
                                 <label>UF</label>
                                 <select ng-model="form.UF" class="form-control">
-                                    <option value="Selecione um Estado"></option>
+                                    <option value="">Selecione um Estado</option>
+                                    <option value="1">MG</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label>Ciadde</label>
                                 <select ng-model="form.cidade" class="form-control">
-                                    <option value="Selecione uma cidade"></option>
+                                    <option value="">Selecione uma cidade</option>
+                                    <option value="1">Ipatinga</option>
                                 </select>
                             </div>
                         </div>
@@ -124,7 +126,7 @@
                             
                             <div class="form-group">
                                 <label>Gradução</label>
-                                <select ng-model="form.graduacao" class="form-control">
+                                <select ng-model="form.graduacao" class="form-control" required>
                                     <option value="">Selecione a gradução</option>
                                     <option value="1">Opção 1</option>
                                 </select>
@@ -137,7 +139,7 @@
 
                             <div class="form-group">
                                 <label>Valor Aula/hora</label>
-                                <input type="text" ng-model="form.valor_hora_aula" class="form-control">
+                                <input type="number" ng-model="form.valor_hora_aula" class="form-control" required>
                             </div>
 
                             <div class="form-group" ng-if="form.graduacao">
@@ -148,7 +150,7 @@
                         </div>
                         
                         <div class="col-md-12">
-                            <button type="submit" ng-model="form.submit" class="btn btn-default">Gravar</button>
+                            <button type="submit" ng-click="submitForm(form)" class="btn btn-default">Gravar</button>
                         </div>
                     </form>
                 </div>

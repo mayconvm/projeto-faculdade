@@ -14,7 +14,13 @@ angular
     'ui.bootstrap',
     'angular-loading-bar',
   ])
-  .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider) {
+  .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider','$httpProvider',function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider, $httpProvider) {
+
+    $httpProvider.defaults.headers.common = {};
+    $httpProvider.defaults.headers.post = {};
+    $httpProvider.defaults.headers.delete = {};
+    $httpProvider.defaults.headers.put = {};
+    $httpProvider.defaults.headers.patch = {};
     
     $ocLazyLoadProvider.config({
       debug:false,
@@ -157,36 +163,36 @@ angular
 
 
 
-   .state('dashboard.report',{
-      controller:'reportController',
-      templateUrl:'views/report/index.html',
-      url:'/report',
+   .state('dashboard.avaliacao',{
+      controller:'avaliacaoController',
+      templateUrl:'views/avaliacao/index.html',
+      url:'/avaliacao',
       resolve: {
         loadMyFile:function($ocLazyLoad) {
           $ocLazyLoad.load({
               name:'sbAdminApp',
               files:[
                 'scripts/services/serviceRequestHttp.js',
-                'scripts/services/serviceReport.js',
-                'scripts/controllers/reportController.js',
+                'scripts/services/serviceAvaliacao.js',
+                'scripts/controllers/avaliacao/avaliacaoController.js',
 
               ]
           })
         }
       }
    })
-   .state('dashboard.report_edit',{
-      controller:'reportEditController',
-      templateUrl:'views/report/form.html',
-      url:'/report_edit',
+   .state('dashboard.avaliacao_edit',{
+      controller:'formAvaliacaoController',
+      templateUrl:'views/avaliacao/form.html',
+      url:'/avaliacao_edit',
       resolve: {
         loadMyFile:function($ocLazyLoad) {
           $ocLazyLoad.load({
               name:'sbAdminApp',
               files:[
                 'scripts/services/serviceRequestHttp.js',
-                'scripts/services/serviceReport.js',
-                'scripts/controllers/reportEditController.js',
+                'scripts/services/serviceAvaliacao.js',
+                'scripts/controllers/avaliacao/formAvaliacaoController.js',
               ]
           })
         }
@@ -197,54 +203,36 @@ angular
    // usuários //
    //////////////
 
-   .state('dashboard.users',{
-      // controller:'usersController',
-      // templateUrl:'views/users/index.html',
-      resolve: {
-        loadMyFile:function($ocLazyLoad) {
-          // $ocLazyLoad.load({
-          //     name:'sbAdminApp',
-          //     files:[
-          //       'scripts/services/serviceRequestHttp.js',
-          //       'scripts/services/serviceUsers.js',
-          //       'scripts/controllers/usersController.js',
-
-          //     ]
-          // })
-        }
-      }
-   })
-
-   .state('dashboard.all_users',{
-      controller:'usersController',
-      templateUrl:'views/users/index.html',
-      url:'/users',
+   .state('dashboard.usuarios',{
+      controller:'usuarioController',
+      templateUrl:'views/usuario/index.html',
+      url:'/usuario',
       resolve: {
         loadMyFile:function($ocLazyLoad) {
           $ocLazyLoad.load({
               name:'sbAdminApp',
               files:[
                 'scripts/services/serviceRequestHttp.js',
-                'scripts/services/serviceUsers.js',
-                'scripts/controllers/users/usersController.js',
+                'scripts/services/serviceUsuario.js',
+                'scripts/controllers/usuario/usuarioController.js',
               ]
           })
         }
       }
    })
 
-   .state('dashboard.form_users',{
-      controller:'formUsersController',
-      templateUrl:'views/users/form.html',
-      url:'/users/form',
+   .state('dashboard.form_usuario',{
+      controller:'formUsuarioController',
+      templateUrl:'views/usuario/form.html',
+      url:'/usuario/form/:idUsuario',
       resolve: {
         loadMyFile:function($ocLazyLoad) {
           $ocLazyLoad.load({
               name:'sbAdminApp',
               files:[
                 'scripts/services/serviceRequestHttp.js',
-                'scripts/services/serviceUsers.js',
-                'scripts/controllers/users/formUsersController.js',
+                'scripts/services/serviceUsuario.js',
+                'scripts/controllers/usuario/formUsuarioController.js',
               ]
           })
         }
@@ -252,6 +240,87 @@ angular
    })
 
 
+
+   //////////////////
+   // Agendamentos //
+   //////////////////
+
+   .state('dashboard.agendamento',{
+      controller:'agendamentoController',
+      templateUrl:'views/agendamentos/index.html',
+      url:'/agendamentos',
+      resolve: {
+        loadMyFile:function($ocLazyLoad) {
+          $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/services/serviceRequestHttp.js',
+                'scripts/services/serviceAgendamento.js',
+                'scripts/controllers/agendamentos/agendamentoController.js',
+              ]
+          })
+        }
+      }
+   })
+
+   .state('dashboard.form_agendamento',{
+      controller:'formAgendamentoController',
+      templateUrl:'views/agendamentos/form.html',
+      url:'/agendamentos/form',
+      resolve: {
+        loadMyFile:function($ocLazyLoad) {
+          $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/services/serviceRequestHttp.js',
+                'scripts/services/serviceAgendamento.js',
+                'scripts/controllers/agendamentos/formAgendamentoController.js',
+              ]
+          })
+        }
+      }
+   })
+
+
+   //////////////
+   // contrato //
+   //////////////
+
+   .state('dashboard.contrato',{
+      controller:'contratoController',
+      templateUrl:'views/contratos/index.html',
+      url:'/contratos',
+      resolve: {
+        loadMyFile:function($ocLazyLoad) {
+          $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/services/serviceRequestHttp.js',
+                'scripts/services/serviceContrato.js',
+                'scripts/controllers/contratos/contratoController.js',
+              ]
+          })
+        }
+      }
+   })
+
+   .state('dashboard.form_contrato',{
+      controller:'formContratoController',
+      templateUrl:'views/contratos/form.html',
+      url:'/contratos/form',
+      resolve: {
+        loadMyFile:function($ocLazyLoad) {
+          $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/services/serviceRequestHttp.js',
+                'scripts/services/serviceContrato.js',
+                'scripts/controllers/contratos/formContratoController.js',
+              ]
+          })
+        }
+      }
+   })
 
   }]);
 

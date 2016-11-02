@@ -1,0 +1,142 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Agendamentos</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Dados do usuário
+            </div>
+            <div class="panel-body">
+                <form role="form">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            
+                            <h1>Dados do agendamento</h1>
+
+                            <div class="form-group">
+                                <label>Cliente</label>
+                                <select ng-model="form.id_cliente" class="form-control">
+                                    <option value="">Cliente</option>
+                                    <option value="1">Primeiro Cliente</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Profissional</label>
+                                <select ng-model="form.id_profissional" class="form-control">
+                                    <option value="">Profissional</option>
+                                    <option value="1">Primeiro Profissional</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <h1>Descrição da atividade</h1>
+
+                            <div class="form-group">
+                                <label>Descrição</label>
+                                <textarea ng-model="form.especialidade" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <h1>Local da atividade</h1>
+
+                            <div class="form-group">
+                                <label>Local</label>
+                                <select ng-model="form.local" class="form-control">
+                                    <option value="">Locais</option>
+                                    <option value="1">Primeiro Local</option>
+                                    <option value="0">Outro</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-xs-8">
+                                        <label>Data</label>
+                                        <input type="text" ng-model="form.data" class="form-control">
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <label>Hora</label>
+                                        <input type="text" ng-model="form.hora" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Tempo</label>
+                                <input type="text" ng-model="form.duracao_aula" class="form-control">
+                            </div>
+                        </div>
+                        
+                        <!-- DADOS DE ENDEREÇO DO USUÁRIO -->
+                        <div class="col-md-6" ng-if="form.local === '0'">
+                            
+                            <h1>Endereço</h1>
+
+                            <div class="form-group">
+                                <label>CEP</label>
+                                <input type="text" ng-model="form.cep" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-xs-8">
+                                        <label>Endereço</label>
+                                        <input type="text" ng-model="form.endereco" class="form-control">
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <label>Número</label>
+                                        <input type="text" ng-model="form.numero" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Bairro</label>
+                                <input type="text" ng-model="form.bairro" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Complemento</label>
+                                <input type="text" ng-model="form.complemento" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label>UF</label>
+                                <select ng-model="form.UF" class="form-control">
+                                    <option value="Selecione um Estado"></option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Ciadde</label>
+                                <select ng-model="form.cidade" class="form-control">
+                                    <option value="Selecione uma cidade"></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="submit" ng-model="form.submit" class="btn btn-default">Gravar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

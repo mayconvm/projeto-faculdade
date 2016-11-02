@@ -3,11 +3,11 @@
 
   angular.module('sbAdminApp')
 
-  .factory('serviceUsers', ['$http', 'serviceRequestHttp', serviceUsers]);
+  .factory('serviceAgendamento', ['$http', 'serviceRequestHttp', serviceAgendamento]);
 
-  function serviceUsers($http, $serviceRequestHttp) {
+  function serviceAgendamento($http, $serviceRequestHttp) {
 
-    var url = 'users';
+    var url = 'agendamento';
     
     return {
       getAll: function (callback) { return $serviceRequestHttp.get(url, callback) },
