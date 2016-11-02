@@ -4,14 +4,14 @@ namespace Restapi\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Controller\FOSRestController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Restapi\Entity\IEntity;
 
 /**
- * @RouteResource("Usuario", pluralize=false)
+ * @RouteResource("Usuario")
  */
 class UsuarioController extends FOSRestController
 {
@@ -44,9 +44,11 @@ class UsuarioController extends FOSRestController
     /**
      * [POST] /<Controller>.
      */
-    public function cpostAction(Request $request)
+    public function postAction(Request $request)
     {
         $service = $this->getService();
+
+        // print_r(($request));
 
         $dataPost = $request->request->all();
         $entity = $service->newEntity($dataPost);
@@ -57,15 +59,21 @@ class UsuarioController extends FOSRestController
     /**
      * [PUT] /<Controller>/{slug}.
      *
+     *
      * @param $slug
      */
     public function putAction(Request $request, $slug)
     {
         $service = $this->getService();
         $entity = $service->getId($slug);
-
+        
         if ($entity) {
             $dataPost = $request->request->all();
+
+            // limpa alguns dados desnecessários
+            unset($dataPost['dataCadastro']);
+
+            // print_r($dataPost);
             $entity = $service->populate($entity, $dataPost);
         }
 
@@ -77,7 +85,7 @@ class UsuarioController extends FOSRestController
      *
      * @param $slug
      */
-    public function deleteAction($slug)
+    public function deleteAction(Request $request, $slug)
     {
         $service = $this->getService();
         $entity = $service->getId($slug);
@@ -85,12 +93,10 @@ class UsuarioController extends FOSRestController
         if ($entity) {
             // delete
             $service->delete($entity);
-    
+        
             return $this->handleView($this->view(["status" => 1], 200));
         }
 
         return $this->handleView($this->view(["status" => 0], 403));
     }
-
-    
 }

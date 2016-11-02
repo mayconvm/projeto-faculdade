@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="\Restapi\Repository\UsuarioRepository")
  * 
  */
-class Usuario
+class Usuario extends AbstractEntity implements IEntity
 {
     /**
      * @var integer
@@ -55,14 +55,14 @@ class Usuario
     /**
      * @var integer
      *
-     * @ORM\Column(name="telefone", type="bigint", nullable=true)
+     * @ORM\Column(name="telefone", type="string", nullable=true)
      */
     private $telefone;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="bairro", type="integer", nullable=true)
+     * @ORM\Column(name="bairro", type="string", length=200, nullable=true)
      */
     private $bairro;
 
@@ -125,7 +125,7 @@ class Usuario
     /**
      * @var \Restapi\Entity\Cliente
      *
-     * @ORM\ManyToOne(targetEntity="Restapi\Entity\Cliente")
+     * @ORM\ManyToOne(targetEntity="Restapi\Entity\Cliente", cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="cod_cliente", referencedColumnName="id_cliente")
      * })
@@ -135,7 +135,7 @@ class Usuario
     /**
      * @var \Restapi\Entity\Disponibilidade
      *
-     * @ORM\ManyToOne(targetEntity="Restapi\Entity\Disponibilidade")
+     * @ORM\ManyToOne(targetEntity="Restapi\Entity\Disponibilidade", cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="cod_disponibilidade", referencedColumnName="iddisponibilidade")
      * })
@@ -145,7 +145,7 @@ class Usuario
     /**
      * @var \Restapi\Entity\Profissional
      *
-     * @ORM\ManyToOne(targetEntity="Restapi\Entity\Profissional")
+     * @ORM\ManyToOne(targetEntity="Restapi\Entity\Profissional", cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="cod_profissional", referencedColumnName="id_profissional")
      * })
@@ -153,6 +153,11 @@ class Usuario
     private $codProfissional;
 
 
+    public function __construct() {
+        // date create entity
+        $this->dataCadastro = new \DateTime();
+        $this->codCliente = new Cliente();
+    }
 
     /**
      * Get idUsuario
