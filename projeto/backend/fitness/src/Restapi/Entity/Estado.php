@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="estado")
  * @ORM\Entity
  */
-class Estado
+class Estado extends AbstractEntity implements IEntity
 {
     /**
      * @var integer

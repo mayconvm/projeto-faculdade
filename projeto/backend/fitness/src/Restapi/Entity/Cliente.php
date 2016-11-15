@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="cliente")
  * @ORM\Entity
  */
-class Cliente
+class Cliente extends AbstractEntity implements IEntity
 {
     /**
      * @var integer
@@ -28,6 +28,10 @@ class Cliente
      */
     private $anexoAvaliacao;
 
+
+    public function __construct ($data = []) {
+        $this->populate($data);
+    }
 
 
     /**

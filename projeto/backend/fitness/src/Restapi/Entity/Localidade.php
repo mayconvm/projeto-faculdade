@@ -5,12 +5,12 @@ namespace Restapi\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * DefinirLocalidade
+ * Localidade
  *
- * @ORM\Table(name="definir_localidade", uniqueConstraints={@ORM\UniqueConstraint(name="idlocal_definido_UNIQUE", columns={"id_local_definido"})})
+ * @ORM\Table(name="localidade", uniqueConstraints={@ORM\UniqueConstraint(name="idlocal_definido_UNIQUE", columns={"id_local_definido"})}, indexes={@ORM\Index(name="fk_localidade_1_idx", columns={"estado"}), @ORM\Index(name="fk_localidade_2_idx", columns={"cidade"})})
  * @ORM\Entity
  */
-class DefinirLocalidade
+class Localidade extends AbstractEntity implements IEntity
 {
     /**
      * @var integer
@@ -27,20 +27,6 @@ class DefinirLocalidade
      * @ORM\Column(name="endereco", type="string", length=80, nullable=true)
      */
     private $endereco;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="cidade", type="string", length=30, nullable=true)
-     */
-    private $cidade;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="estado", type="string", length=20, nullable=true)
-     */
-    private $estado;
 
     /**
      * @var string
@@ -92,11 +78,31 @@ class DefinirLocalidade
     private $telefone;
 
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="horario_funcionamento", type="datetime", nullable=true)
+     * @ORM\Column(name="horario_funcionamento", type="string", length=200, nullable=true)
      */
     private $horarioFuncionamento;
+
+    /**
+     * @var \Restapi\Entity\Estado
+     *
+     * @ORM\ManyToOne(targetEntity="Restapi\Entity\Estado")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="estado", referencedColumnName="idestado")
+     * })
+     */
+    private $estado;
+
+    /**
+     * @var \Restapi\Entity\Cidade
+     *
+     * @ORM\ManyToOne(targetEntity="Restapi\Entity\Cidade")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="cidade", referencedColumnName="idcidade")
+     * })
+     */
+    private $cidade;
 
 
 
@@ -115,7 +121,7 @@ class DefinirLocalidade
      *
      * @param string $endereco
      *
-     * @return DefinirLocalidade
+     * @return Localidade
      */
     public function setEndereco($endereco)
     {
@@ -135,59 +141,11 @@ class DefinirLocalidade
     }
 
     /**
-     * Set cidade
-     *
-     * @param string $cidade
-     *
-     * @return DefinirLocalidade
-     */
-    public function setCidade($cidade)
-    {
-        $this->cidade = $cidade;
-
-        return $this;
-    }
-
-    /**
-     * Get cidade
-     *
-     * @return string
-     */
-    public function getCidade()
-    {
-        return $this->cidade;
-    }
-
-    /**
-     * Set estado
-     *
-     * @param string $estado
-     *
-     * @return DefinirLocalidade
-     */
-    public function setEstado($estado)
-    {
-        $this->estado = $estado;
-
-        return $this;
-    }
-
-    /**
-     * Get estado
-     *
-     * @return string
-     */
-    public function getEstado()
-    {
-        return $this->estado;
-    }
-
-    /**
      * Set bairro
      *
      * @param string $bairro
      *
-     * @return DefinirLocalidade
+     * @return Localidade
      */
     public function setBairro($bairro)
     {
@@ -211,7 +169,7 @@ class DefinirLocalidade
      *
      * @param integer $numero
      *
-     * @return DefinirLocalidade
+     * @return Localidade
      */
     public function setNumero($numero)
     {
@@ -235,7 +193,7 @@ class DefinirLocalidade
      *
      * @param integer $cep
      *
-     * @return DefinirLocalidade
+     * @return Localidade
      */
     public function setCep($cep)
     {
@@ -259,7 +217,7 @@ class DefinirLocalidade
      *
      * @param string $complemento
      *
-     * @return DefinirLocalidade
+     * @return Localidade
      */
     public function setComplemento($complemento)
     {
@@ -283,7 +241,7 @@ class DefinirLocalidade
      *
      * @param string $equipamentosDispLocal
      *
-     * @return DefinirLocalidade
+     * @return Localidade
      */
     public function setEquipamentosDispLocal($equipamentosDispLocal)
     {
@@ -307,7 +265,7 @@ class DefinirLocalidade
      *
      * @param string $observacoes
      *
-     * @return DefinirLocalidade
+     * @return Localidade
      */
     public function setObservacoes($observacoes)
     {
@@ -331,7 +289,7 @@ class DefinirLocalidade
      *
      * @param integer $telefone
      *
-     * @return DefinirLocalidade
+     * @return Localidade
      */
     public function setTelefone($telefone)
     {
@@ -353,9 +311,9 @@ class DefinirLocalidade
     /**
      * Set horarioFuncionamento
      *
-     * @param \DateTime $horarioFuncionamento
+     * @param string $horarioFuncionamento
      *
-     * @return DefinirLocalidade
+     * @return Localidade
      */
     public function setHorarioFuncionamento($horarioFuncionamento)
     {
@@ -367,10 +325,58 @@ class DefinirLocalidade
     /**
      * Get horarioFuncionamento
      *
-     * @return \DateTime
+     * @return string
      */
     public function getHorarioFuncionamento()
     {
         return $this->horarioFuncionamento;
+    }
+
+    /**
+     * Set estado
+     *
+     * @param string $estado
+     *
+     * @return Localidade
+     */
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * Get estado
+     *
+     * @return string
+     */
+    public function getEstado()
+    {
+        return $this->estado;
+    }
+
+    /**
+     * Set cidade
+     *
+     * @param \Restapi\Entity\Cidade $cidade
+     *
+     * @return Localidade
+     */
+    public function setCidade(\Restapi\Entity\Cidade $cidade = null)
+    {
+        $this->cidade = $cidade;
+
+        return $this;
+    }
+
+    /**
+     * Get cidade
+     *
+     * @return \Restapi\Entity\Cidade
+     */
+    public function getCidade()
+    {
+        return $this->cidade;
     }
 }

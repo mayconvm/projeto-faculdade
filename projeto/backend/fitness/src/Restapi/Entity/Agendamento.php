@@ -7,11 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Agendamento
  *
- * @ORM\Table(name="agendamento", uniqueConstraints={@ORM\UniqueConstraint(name="idAgendamento_UNIQUE", columns={"id_agendamento"})}, indexes={@ORM\Index(name="fk_profissional_idx", columns={"id_profissional"}), @ORM\Index(name="fk_cliente_idx", columns={"id_cliente"})})
+ * @ORM\Table(name="agendamento", uniqueConstraints={@ORM\UniqueConstraint(name="idAgendamento_UNIQUE", columns={"id_agendamento"})}, indexes={@ORM\Index(name="fk_profissional_idx", columns={"id_profissional"}), @ORM\Index(name="fk_cliente_idx", columns={"id_cliente"}), @ORM\Index(name="fk_agendamento_1_idx", columns={"local"})})
  * @ORM\Entity
- * @ORM\Entity(repositoryClass="\Restapi\Repository\AgendamentoRepository")
  */
-class Agendamento
+class Agendamento extends AbstractEntity implements IEntity
 {
     /**
      * @var integer
@@ -23,13 +22,6 @@ class Agendamento
     private $idAgendamento;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="local", type="string", length=45, nullable=true)
-     */
-    private $local;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="data_hora", type="datetime", nullable=true)
@@ -37,9 +29,9 @@ class Agendamento
     private $dataHora;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="valor", type="integer", nullable=true)
+     * @ORM\Column(name="valor", type="decimal", precision=10, scale=2, nullable=true)
      */
     private $valor;
 
@@ -51,28 +43,45 @@ class Agendamento
     private $especialidade;
 
     /**
-     * @var \DateTime
+     * @var integer
      *
-     * @ORM\Column(name="duracao_aula", type="datetime", nullable=true)
+     * @ORM\Column(name="duracao_aula", type="integer", nullable=true)
      */
     private $duracaoAula;
 
     /**
-     * @var \Restapi\Entity\Cliente
+     * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Restapi\Entity\Cliente")
+     * @ORM\Column(name="status", type="integer", nullable=false)
+     */
+    private $status = 1;
+
+    /**
+     * @var \Restapi\Entity\Localidade
+     *
+     * @ORM\ManyToOne(targetEntity="Restapi\Entity\Localidade")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_cliente", referencedColumnName="id_cliente")
+     *   @ORM\JoinColumn(name="local", referencedColumnName="id_local_definido")
+     * })
+     */
+    private $local;
+
+    /**
+     * @var \Restapi\Entity\Usuario
+     *
+     * @ORM\ManyToOne(targetEntity="Restapi\Entity\Usuario")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_cliente", referencedColumnName="id_usuario")
      * })
      */
     private $idCliente;
 
     /**
-     * @var \Restapi\Entity\Profissional
+     * @var \Restapi\Entity\Usuario
      *
-     * @ORM\ManyToOne(targetEntity="Restapi\Entity\Profissional")
+     * @ORM\ManyToOne(targetEntity="Restapi\Entity\Usuario")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_profissional", referencedColumnName="id_profissional")
+     *   @ORM\JoinColumn(name="id_profissional", referencedColumnName="id_usuario")
      * })
      */
     private $idProfissional;
@@ -87,30 +96,6 @@ class Agendamento
     public function getIdAgendamento()
     {
         return $this->idAgendamento;
-    }
-
-    /**
-     * Set local
-     *
-     * @param string $local
-     *
-     * @return Agendamento
-     */
-    public function setLocal($local)
-    {
-        $this->local = $local;
-
-        return $this;
-    }
-
-    /**
-     * Get local
-     *
-     * @return string
-     */
-    public function getLocal()
-    {
-        return $this->local;
     }
 
     /**
@@ -140,7 +125,7 @@ class Agendamento
     /**
      * Set valor
      *
-     * @param integer $valor
+     * @param string $valor
      *
      * @return Agendamento
      */
@@ -154,7 +139,7 @@ class Agendamento
     /**
      * Get valor
      *
-     * @return integer
+     * @return string
      */
     public function getValor()
     {
@@ -188,7 +173,7 @@ class Agendamento
     /**
      * Set duracaoAula
      *
-     * @param \DateTime $duracaoAula
+     * @param integer $duracaoAula
      *
      * @return Agendamento
      */
@@ -202,7 +187,7 @@ class Agendamento
     /**
      * Get duracaoAula
      *
-     * @return \DateTime
+     * @return integer
      */
     public function getDuracaoAula()
     {
@@ -210,13 +195,61 @@ class Agendamento
     }
 
     /**
-     * Set idCliente
+     * Set status
      *
-     * @param \Restapi\Entity\Cliente $idCliente
+     * @param integer $status
      *
      * @return Agendamento
      */
-    public function setIdCliente(\Restapi\Entity\Cliente $idCliente = null)
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return integer
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set local
+     *
+     * @param \Restapi\Entity\Localidade $local
+     *
+     * @return Agendamento
+     */
+    public function setLocal(\Restapi\Entity\Localidade $local = null)
+    {
+        $this->local = $local;
+
+        return $this;
+    }
+
+    /**
+     * Get local
+     *
+     * @return \Restapi\Entity\Localidade
+     */
+    public function getLocal()
+    {
+        return $this->local;
+    }
+
+    /**
+     * Set idCliente
+     *
+     * @param \Restapi\Entity\Usuario $idCliente
+     *
+     * @return Agendamento
+     */
+    public function setIdCliente(\Restapi\Entity\Usuario $idCliente = null)
     {
         $this->idCliente = $idCliente;
 
@@ -226,7 +259,7 @@ class Agendamento
     /**
      * Get idCliente
      *
-     * @return \Restapi\Entity\Cliente
+     * @return \Restapi\Entity\Usuario
      */
     public function getIdCliente()
     {
@@ -236,11 +269,11 @@ class Agendamento
     /**
      * Set idProfissional
      *
-     * @param \Restapi\Entity\Profissional $idProfissional
+     * @param \Restapi\Entity\Usuario $idProfissional
      *
      * @return Agendamento
      */
-    public function setIdProfissional(\Restapi\Entity\Profissional $idProfissional = null)
+    public function setIdProfissional(\Restapi\Entity\Usuario $idProfissional = null)
     {
         $this->idProfissional = $idProfissional;
 
@@ -250,7 +283,7 @@ class Agendamento
     /**
      * Get idProfissional
      *
-     * @return \Restapi\Entity\Profissional
+     * @return \Restapi\Entity\Usuario
      */
     public function getIdProfissional()
     {

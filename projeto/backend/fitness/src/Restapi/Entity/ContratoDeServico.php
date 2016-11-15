@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * ContratoDeServico
  *
- * @ORM\Table(name="contrato_de_servico", uniqueConstraints={@ORM\UniqueConstraint(name="cod_local_UNIQUE", columns={"cod_local"})}, indexes={@ORM\Index(name="fk_profissional_idx", columns={"cod_profissional"}), @ORM\Index(name="fk_cliente_idx", columns={"cod_cliente"}), @ORM\Index(name="fk_local_idx", columns={"cod_local"})})
+ * @ORM\Table(name="contrato_de_servico", uniqueConstraints={@ORM\UniqueConstraint(name="id_agendamento_UNIQUE", columns={"id_agendamento"})})
  * @ORM\Entity
  */
-class ContratoDeServico
+class ContratoDeServico extends AbstractEntity implements IEntity
 {
     /**
      * @var integer
@@ -22,25 +22,11 @@ class ContratoDeServico
     private $idContrato;
 
     /**
-     * @var \DateTime
+     * @var float
      *
-     * @ORM\Column(name="data_hora", type="datetime", nullable=true)
-     */
-    private $dataHora;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="valor", type="integer", nullable=true)
+     * @ORM\Column(name="valor", type="float", precision=10, scale=2, nullable=true)
      */
     private $valor;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="duracao_aula", type="datetime", nullable=true)
-     */
-    private $duracaoAula;
 
     /**
      * @var \DateTime
@@ -57,48 +43,28 @@ class ContratoDeServico
     private $tipoPagamento;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="descricao_atividades", type="text", nullable=true)
-     */
-    private $descricaoAtividades;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="regras_personline", type="string", length=45, nullable=true)
+     * @ORM\Column(name="regras_personline", type="integer", nullable=true)
      */
     private $regrasPersonline;
 
     /**
-     * @var \Restapi\Entity\Cliente
+     * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Restapi\Entity\Cliente")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="cod_cliente", referencedColumnName="id_cliente")
-     * })
+     * @ORM\Column(name="status_pay", type="integer", nullable=true)
      */
-    private $codCliente;
+    private $statusPay;
 
     /**
-     * @var \Restapi\Entity\DefinirLocalidade
+     * @var \Restapi\Entity\Agendamento
      *
-     * @ORM\ManyToOne(targetEntity="Restapi\Entity\DefinirLocalidade")
+     * @ORM\ManyToOne(targetEntity="Restapi\Entity\Agendamento")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="cod_local", referencedColumnName="id_local_definido")
+     *   @ORM\JoinColumn(name="id_agendamento", referencedColumnName="id_agendamento")
      * })
      */
-    private $codLocal;
-
-    /**
-     * @var \Restapi\Entity\Profissional
-     *
-     * @ORM\ManyToOne(targetEntity="Restapi\Entity\Profissional")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="cod_profissional", referencedColumnName="id_profissional")
-     * })
-     */
-    private $codProfissional;
+    private $idAgendamento;
 
 
 
@@ -113,33 +79,9 @@ class ContratoDeServico
     }
 
     /**
-     * Set dataHora
-     *
-     * @param \DateTime $dataHora
-     *
-     * @return ContratoDeServico
-     */
-    public function setDataHora($dataHora)
-    {
-        $this->dataHora = $dataHora;
-
-        return $this;
-    }
-
-    /**
-     * Get dataHora
-     *
-     * @return \DateTime
-     */
-    public function getDataHora()
-    {
-        return $this->dataHora;
-    }
-
-    /**
      * Set valor
      *
-     * @param integer $valor
+     * @param float $valor
      *
      * @return ContratoDeServico
      */
@@ -153,35 +95,11 @@ class ContratoDeServico
     /**
      * Get valor
      *
-     * @return integer
+     * @return float
      */
     public function getValor()
     {
         return $this->valor;
-    }
-
-    /**
-     * Set duracaoAula
-     *
-     * @param \DateTime $duracaoAula
-     *
-     * @return ContratoDeServico
-     */
-    public function setDuracaoAula($duracaoAula)
-    {
-        $this->duracaoAula = $duracaoAula;
-
-        return $this;
-    }
-
-    /**
-     * Get duracaoAula
-     *
-     * @return \DateTime
-     */
-    public function getDuracaoAula()
-    {
-        return $this->duracaoAula;
     }
 
     /**
@@ -233,33 +151,9 @@ class ContratoDeServico
     }
 
     /**
-     * Set descricaoAtividades
-     *
-     * @param string $descricaoAtividades
-     *
-     * @return ContratoDeServico
-     */
-    public function setDescricaoAtividades($descricaoAtividades)
-    {
-        $this->descricaoAtividades = $descricaoAtividades;
-
-        return $this;
-    }
-
-    /**
-     * Get descricaoAtividades
-     *
-     * @return string
-     */
-    public function getDescricaoAtividades()
-    {
-        return $this->descricaoAtividades;
-    }
-
-    /**
      * Set regrasPersonline
      *
-     * @param string $regrasPersonline
+     * @param integer $regrasPersonline
      *
      * @return ContratoDeServico
      */
@@ -273,7 +167,7 @@ class ContratoDeServico
     /**
      * Get regrasPersonline
      *
-     * @return string
+     * @return integer
      */
     public function getRegrasPersonline()
     {
@@ -281,74 +175,50 @@ class ContratoDeServico
     }
 
     /**
-     * Set codCliente
+     * Set statusPay
      *
-     * @param \Restapi\Entity\Cliente $codCliente
+     * @param integer $statusPay
      *
      * @return ContratoDeServico
      */
-    public function setCodCliente(\Restapi\Entity\Cliente $codCliente = null)
+    public function setStatusPay($statusPay)
     {
-        $this->codCliente = $codCliente;
+        $this->statusPay = $statusPay;
 
         return $this;
     }
 
     /**
-     * Get codCliente
+     * Get statusPay
      *
-     * @return \Restapi\Entity\Cliente
+     * @return integer
      */
-    public function getCodCliente()
+    public function getStatusPay()
     {
-        return $this->codCliente;
+        return $this->statusPay;
     }
 
     /**
-     * Set codLocal
+     * Set idAgendamento
      *
-     * @param \Restapi\Entity\DefinirLocalidade $codLocal
+     * @param \Restapi\Entity\Agendamento $idAgendamento
      *
      * @return ContratoDeServico
      */
-    public function setCodLocal(\Restapi\Entity\DefinirLocalidade $codLocal = null)
+    public function setIdAgendamento(\Restapi\Entity\Agendamento $idAgendamento = null)
     {
-        $this->codLocal = $codLocal;
+        $this->idAgendamento = $idAgendamento;
 
         return $this;
     }
 
     /**
-     * Get codLocal
+     * Get idAgendamento
      *
-     * @return \Restapi\Entity\DefinirLocalidade
+     * @return \Restapi\Entity\Agendamento
      */
-    public function getCodLocal()
+    public function getIdAgendamento()
     {
-        return $this->codLocal;
-    }
-
-    /**
-     * Set codProfissional
-     *
-     * @param \Restapi\Entity\Profissional $codProfissional
-     *
-     * @return ContratoDeServico
-     */
-    public function setCodProfissional(\Restapi\Entity\Profissional $codProfissional = null)
-    {
-        $this->codProfissional = $codProfissional;
-
-        return $this;
-    }
-
-    /**
-     * Get codProfissional
-     *
-     * @return \Restapi\Entity\Profissional
-     */
-    public function getCodProfissional()
-    {
-        return $this->codProfissional;
+        return $this->idAgendamento;
     }
 }

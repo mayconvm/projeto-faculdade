@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="cidade", indexes={@ORM\Index(name="fk_estado_idx", columns={"cod_estado"})})
  * @ORM\Entity
  */
-class Cidade
+class Cidade extends AbstractEntity implements IEntity
 {
     /**
      * @var integer

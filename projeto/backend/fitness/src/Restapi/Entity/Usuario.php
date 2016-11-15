@@ -8,10 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Usuario
  *
  * @ORM\Table(name="usuario", indexes={@ORM\Index(name="fk_disponibilidade_idx", columns={"cod_disponibilidade"}), @ORM\Index(name="fk_profissional4_idx", columns={"cod_profissional"}), @ORM\Index(name="fk_cliente4_idx", columns={"cod_cliente"})})
- * 
  * @ORM\Entity
- * @ORM\Entity(repositoryClass="\Restapi\Repository\UsuarioRepository")
- * 
  */
 class Usuario extends AbstractEntity implements IEntity
 {
@@ -53,37 +50,37 @@ class Usuario extends AbstractEntity implements IEntity
     private $uf;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="telefone", type="string", nullable=true)
+     * @ORM\Column(name="telefone", type="string", length=20, nullable=true)
      */
     private $telefone;
 
     /**
-     * @var integer
+     * @var string
      *
      * @ORM\Column(name="bairro", type="string", length=200, nullable=true)
      */
     private $bairro;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="numero", type="integer", nullable=true)
+     * @ORM\Column(name="numero", type="string", length=20, nullable=true)
      */
     private $numero;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="cep", type="string", length=9, nullable=true)
+     * @ORM\Column(name="cep", type="string", length=20, nullable=true)
      */
     private $cep;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="complemento", type="string", length=20, nullable=true)
+     * @ORM\Column(name="complemento", type="string", length=200, nullable=true)
      */
     private $complemento;
 
@@ -123,19 +120,23 @@ class Usuario extends AbstractEntity implements IEntity
     private $senha;
 
     /**
-     * @var \Restapi\Entity\Cliente
+     * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Restapi\Entity\Cliente", cascade={"persist"})
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="cod_cliente", referencedColumnName="id_cliente")
-     * })
+     * @ORM\Column(name="tipo", type="integer", nullable=true)
      */
-    private $codCliente;
+    private $tipo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=200, nullable=true)
+     */
+    private $email;
 
     /**
      * @var \Restapi\Entity\Disponibilidade
      *
-     * @ORM\ManyToOne(targetEntity="Restapi\Entity\Disponibilidade", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Restapi\Entity\Disponibilidade",cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="cod_disponibilidade", referencedColumnName="iddisponibilidade")
      * })
@@ -145,19 +146,24 @@ class Usuario extends AbstractEntity implements IEntity
     /**
      * @var \Restapi\Entity\Profissional
      *
-     * @ORM\ManyToOne(targetEntity="Restapi\Entity\Profissional", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Restapi\Entity\Profissional",cascade={"all"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="cod_profissional", referencedColumnName="id_profissional")
      * })
      */
     private $codProfissional;
 
+    /**
+     * @var \Restapi\Entity\Cliente
+     *
+     * @ORM\ManyToOne(targetEntity="Restapi\Entity\Cliente",cascade={"all"})
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="cod_cliente", referencedColumnName="id_cliente")
+     * })
+     */
+    private $codCliente;
 
-    public function __construct() {
-        // date create entity
-        $this->dataCadastro = new \DateTime();
-        $this->codCliente = new Cliente();
-    }
+
 
     /**
      * Get idUsuario
@@ -268,7 +274,7 @@ class Usuario extends AbstractEntity implements IEntity
     /**
      * Set telefone
      *
-     * @param integer $telefone
+     * @param string $telefone
      *
      * @return Usuario
      */
@@ -282,7 +288,7 @@ class Usuario extends AbstractEntity implements IEntity
     /**
      * Get telefone
      *
-     * @return integer
+     * @return string
      */
     public function getTelefone()
     {
@@ -292,7 +298,7 @@ class Usuario extends AbstractEntity implements IEntity
     /**
      * Set bairro
      *
-     * @param integer $bairro
+     * @param string $bairro
      *
      * @return Usuario
      */
@@ -306,7 +312,7 @@ class Usuario extends AbstractEntity implements IEntity
     /**
      * Get bairro
      *
-     * @return integer
+     * @return string
      */
     public function getBairro()
     {
@@ -316,7 +322,7 @@ class Usuario extends AbstractEntity implements IEntity
     /**
      * Set numero
      *
-     * @param integer $numero
+     * @param string $numero
      *
      * @return Usuario
      */
@@ -330,7 +336,7 @@ class Usuario extends AbstractEntity implements IEntity
     /**
      * Get numero
      *
-     * @return integer
+     * @return string
      */
     public function getNumero()
     {
@@ -506,27 +512,51 @@ class Usuario extends AbstractEntity implements IEntity
     }
 
     /**
-     * Set codCliente
+     * Set tipo
      *
-     * @param \Restapi\Entity\Cliente $codCliente
+     * @param integer $tipo
      *
      * @return Usuario
      */
-    public function setCodCliente(\Restapi\Entity\Cliente $codCliente = null)
+    public function setTipo($tipo)
     {
-        $this->codCliente = $codCliente;
+        $this->tipo = $tipo;
 
         return $this;
     }
 
     /**
-     * Get codCliente
+     * Get tipo
      *
-     * @return \Restapi\Entity\Cliente
+     * @return integer
      */
-    public function getCodCliente()
+    public function getTipo()
     {
-        return $this->codCliente;
+        return $this->tipo;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return Usuario
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
     }
 
     /**
@@ -575,5 +605,29 @@ class Usuario extends AbstractEntity implements IEntity
     public function getCodProfissional()
     {
         return $this->codProfissional;
+    }
+
+    /**
+     * Set codCliente
+     *
+     * @param \Restapi\Entity\Cliente $codCliente
+     *
+     * @return Usuario
+     */
+    public function setCodCliente(\Restapi\Entity\Cliente $codCliente = null)
+    {
+        $this->codCliente = $codCliente;
+
+        return $this;
+    }
+
+    /**
+     * Get codCliente
+     *
+     * @return \Restapi\Entity\Cliente
+     */
+    public function getCodCliente()
+    {
+        return $this->codCliente;
     }
 }

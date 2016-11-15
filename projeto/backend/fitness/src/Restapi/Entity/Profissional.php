@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="profissional", uniqueConstraints={@ORM\UniqueConstraint(name="idProfissional_UNIQUE", columns={"id_profissional"})})
  * @ORM\Entity
  */
-class Profissional
+class Profissional extends AbstractEntity implements IEntity
 {
     /**
      * @var integer
@@ -56,6 +56,10 @@ class Profissional
      */
     private $mediaAval;
 
+
+    public function __construct($data = []) {
+        $this->populate($data);
+    }
 
 
     /**

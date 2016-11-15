@@ -7,11 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Avaliacao
  *
- * @ORM\Table(name="avaliacao", indexes={@ORM\Index(name="fk_profissional3", columns={"id_profissional"}), @ORM\Index(name="fk_cliente3", columns={"id_cliente"})})
+ * @ORM\Table(name="avaliacao", indexes={@ORM\Index(name="fk_avaliacao_1_idx", columns={"id_agendamento"}), @ORM\Index(name="fk_profissional3", columns={"id_profissional"}), @ORM\Index(name="fk_avaliacao_2", columns={"id_cliente"})})
  * @ORM\Entity
- * @ORM\Entity(repositoryClass="\Restapi\Repository\AvaliacaoRepository")
  */
-class Avaliacao
+class Avaliacao extends AbstractEntity implements IEntity
 {
     /**
      * @var integer
@@ -30,28 +29,38 @@ class Avaliacao
     private $descAval;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="ponto", type="string", length=1, nullable=true)
+     * @ORM\Column(name="ponto", type="integer", length=1, nullable=true)
      */
     private $ponto;
 
     /**
-     * @var \Restapi\Entity\Cliente
+     * @var \Restapi\Entity\Agendamento
      *
-     * @ORM\ManyToOne(targetEntity="Restapi\Entity\Cliente")
+     * @ORM\ManyToOne(targetEntity="Restapi\Entity\Agendamento")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_cliente", referencedColumnName="id_cliente")
+     *   @ORM\JoinColumn(name="id_agendamento", referencedColumnName="id_agendamento")
+     * })
+     */
+    private $idAgendamento;
+
+    /**
+     * @var \Restapi\Entity\Usuario
+     *
+     * @ORM\ManyToOne(targetEntity="Restapi\Entity\Usuario")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_cliente", referencedColumnName="id_usuario")
      * })
      */
     private $idCliente;
 
     /**
-     * @var \Restapi\Entity\Profissional
+     * @var \Restapi\Entity\Usuario
      *
-     * @ORM\ManyToOne(targetEntity="Restapi\Entity\Profissional")
+     * @ORM\ManyToOne(targetEntity="Restapi\Entity\Usuario")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_profissional", referencedColumnName="id_profissional")
+     *   @ORM\JoinColumn(name="id_profissional", referencedColumnName="id_usuario")
      * })
      */
     private $idProfissional;
@@ -95,7 +104,7 @@ class Avaliacao
     /**
      * Set ponto
      *
-     * @param string $ponto
+     * @param integer $ponto
      *
      * @return Avaliacao
      */
@@ -109,7 +118,7 @@ class Avaliacao
     /**
      * Get ponto
      *
-     * @return string
+     * @return integer
      */
     public function getPonto()
     {
@@ -117,13 +126,37 @@ class Avaliacao
     }
 
     /**
-     * Set idCliente
+     * Set idAgendamento
      *
-     * @param \Restapi\Entity\Cliente $idCliente
+     * @param \Restapi\Entity\Agendamento $idAgendamento
      *
      * @return Avaliacao
      */
-    public function setIdCliente(\Restapi\Entity\Cliente $idCliente = null)
+    public function setIdAgendamento(\Restapi\Entity\Agendamento $idAgendamento = null)
+    {
+        $this->idAgendamento = $idAgendamento;
+
+        return $this;
+    }
+
+    /**
+     * Get idAgendamento
+     *
+     * @return \Restapi\Entity\Agendamento
+     */
+    public function getIdAgendamento()
+    {
+        return $this->idAgendamento;
+    }
+
+    /**
+     * Set idCliente
+     *
+     * @param \Restapi\Entity\Usuario $idCliente
+     *
+     * @return Avaliacao
+     */
+    public function setIdCliente(\Restapi\Entity\Usuario $idCliente = null)
     {
         $this->idCliente = $idCliente;
 
@@ -133,7 +166,7 @@ class Avaliacao
     /**
      * Get idCliente
      *
-     * @return \Restapi\Entity\Cliente
+     * @return \Restapi\Entity\Usuario
      */
     public function getIdCliente()
     {
@@ -143,11 +176,11 @@ class Avaliacao
     /**
      * Set idProfissional
      *
-     * @param \Restapi\Entity\Profissional $idProfissional
+     * @param \Restapi\Entity\Usuario $idProfissional
      *
      * @return Avaliacao
      */
-    public function setIdProfissional(\Restapi\Entity\Profissional $idProfissional = null)
+    public function setIdProfissional(\Restapi\Entity\Usuario $idProfissional = null)
     {
         $this->idProfissional = $idProfissional;
 
@@ -157,7 +190,7 @@ class Avaliacao
     /**
      * Get idProfissional
      *
-     * @return \Restapi\Entity\Profissional
+     * @return \Restapi\Entity\Usuario
      */
     public function getIdProfissional()
     {
