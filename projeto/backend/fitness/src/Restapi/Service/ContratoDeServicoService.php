@@ -11,19 +11,20 @@ class ContratoDeServicoService extends AbstractService {
 
     public function populate(IEntity $entity, $data)
     {
+        $date = $entity->getDataPagamento();
 
         foreach ($data as $key => $value) {
             switch ($key) {
-                case 'codCliente':
+                case 'idAgendamento':
                     if (is_numeric($value)) {
-                        $data[$key] = $this->_em->getPartialReference('Restapi\Entity\Cliente', $value);
+                        $data[$key] = $this->_em->getPartialReference('Restapi\Entity\Agendamento', $value);
                     }
                     break;
-                case 'codProfissional':
-                    if (is_numeric($value)) {
-                        $data[$key] = $this->_em->getPartialReference('Restapi\Entity\Profissional', $value);
+                case 'data_pagamento':
+                    // set date
+                    if (is_string($value)) {
+                        $data['data_pagamento'] = \DateTime::createFromFormat("Y-m-d", trim($value));
                     }
-                    break;
             }
         }
 
@@ -32,5 +33,7 @@ class ContratoDeServicoService extends AbstractService {
         return $entity;
     }
 
-
+    public function findBy($array) {
+        return $this->getRepository()->findBy($array) ;
+    }
 }

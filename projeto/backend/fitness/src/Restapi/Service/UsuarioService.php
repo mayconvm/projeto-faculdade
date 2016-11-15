@@ -20,9 +20,9 @@ class UsuarioService extends AbstractService {
     {
         if (isset($data['type'])) {
             if ($data['type'] == self::$Profissional) {
-                $data['codProfissional'] = new EntityProfissional();
+                $data['codProfissional'] = new EntityProfissional($data);
             } else if ($data['type'] == self::$Cliente) {
-                $data['codCliente'] = new EntityCliente();
+                $data['codCliente'] = new EntityCliente($data);
             }
         }
 
@@ -30,7 +30,7 @@ class UsuarioService extends AbstractService {
             switch ($key) {
                 case 'data_nascimento':
                     if (!empty($value)) {
-                        $data[$key] = \DateTime::createFromFormat('d/m/Y', $value);
+                        $data[$key] = \DateTime::createFromFormat('Y-m-d', $value);
                     }
                     break;
             }
@@ -38,8 +38,14 @@ class UsuarioService extends AbstractService {
 
         $entity->populate($data);
 
+        // print_r($entity);
+        // print_r($data);
+        // exit("400");
+
         return $entity;
     }
 
-
+    public function findBy($array) {
+        return $this->getRepository()->findBy($array) ;
+    }
 }

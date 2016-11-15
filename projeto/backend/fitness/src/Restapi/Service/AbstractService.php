@@ -59,4 +59,8 @@ abstract class AbstractService {
 
         return $entity;
     }
+
+    public function findBy($array) {
+        return $this->getRepository()->findBy($array) ;
+    }
 }
