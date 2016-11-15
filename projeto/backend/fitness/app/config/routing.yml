@@ -17,3 +17,15 @@ Agendamento:
 ContratoDeServico:
     type:     rest
     resource: \Restapi\Controller\ContratoDeServicoController
+
+Localidade:
+    type:     rest
+    resource: \Restapi\Controller\LocalidadeController
+
+Cidade:
+    type:     rest
+    resource: \Restapi\Controller\CidadeController
+
+Estado:
+    type:     rest
+    resource: \Restapi\Controller\EstadoController

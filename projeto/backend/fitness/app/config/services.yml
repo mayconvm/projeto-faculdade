@@ -28,3 +28,15 @@ services:
   contratoDeServicoService:
       class: Restapi\Service\ContratoDeServicoService
       arguments: ["@doctrine.orm.entity_manager", 'Restapi\Entity\ContratoDeServico']
+
+  localidadeService:
+      class: Restapi\Service\LocalidadeService
+      arguments: ["@doctrine.orm.entity_manager", 'Restapi\Entity\Localidade']
+
+  cidadeService:
+      class: Restapi\Service\CidadeService
+      arguments: ["@doctrine.orm.entity_manager", 'Restapi\Entity\Cidade']
+  
+  estadoService:
+      class: Restapi\Service\EstadoService
+      arguments: ["@doctrine.orm.entity_manager", 'Restapi\Entity\Estado']
