@@ -23,10 +23,17 @@ class AgendamentoController extends FOSRestController
      * [GET] /<Controller>.
      *
      */
-    public function cgetAction() {
+    public function cgetAction(Request $request) {
         $service = $this->getService();
 
-        return $this->handleView($this->view($service->getAll(), 200));
+        $method = 'getAll';
+
+        $queryString = $request->query->all();
+        if (!empty($queryString)) {
+            $method = 'findBy';
+        }
+
+        return $this->handleView($this->view($service->$method($queryString), 200));
     }
 
     /**
@@ -44,7 +51,7 @@ class AgendamentoController extends FOSRestController
     /**
      * [POST] /<Controller>.
      */
-    public function cpostAction(Request $request)
+    public function postAction(Request $request)
     {
         $service = $this->getService();
 

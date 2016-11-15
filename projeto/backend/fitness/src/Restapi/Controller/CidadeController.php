@@ -11,29 +11,22 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Restapi\Entity\IEntity;
 
 /**
- * @RouteResource("ContratoDeServico", pluralize=false)
+ * @RouteResource("Cidade", pluralize=false)
  */
-class ContratoDeServicoController extends FOSRestController
+class CidadeController extends FOSRestController
 {
     private function getService() {
-        return $this->get("contratoDeServicoService");
+        return $this->get("cidadeService");
     }
 
     /**
      * [GET] /<Controller>.
      *
      */
-    public function cgetAction(Request $request) {
+    public function cgetAction() {
         $service = $this->getService();
 
-        $method = 'getAll';
-
-        $queryString = $request->query->all();
-        if (!empty($queryString)) {
-            $method = 'findBy';
-        }
-
-        return $this->handleView($this->view($service->$method($queryString), 200));
+        return $this->handleView($this->view($service->getAll(), 200));
     }
 
     /**
