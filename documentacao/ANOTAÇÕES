@@ -1,0 +1,16 @@
+ANOTAÇÕES
+
+REDIRECIONAR UTILIZANDO JAVASCRIPT
+$state.go("dashboard.usuarios");
+
+GERANDO AS ENTIDADES
+php bin/console doctrine:mapping:convert --namespace="Restapi\Entity\\" --filter=Localidade -f --from-database annotation src/
+
+GERANDO OS MÉTODOS GET-SET
+php bin/console doctrine:generate:entities Restapi\\Entity\\Localidade --no-backup
+
+EXTENDER TODAS AS ENTIDADES
+extends AbstractEntity implements IEntity
+
+php bin/console doctrine:mapping:convert --namespace="Restapi\Entity\\" --filter=Usuario -f --from-database annotation src/
+php bin/console doctrine:generate:entities Restapi\\Entity\\Usuario --no-backup
