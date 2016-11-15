@@ -55,7 +55,7 @@
 
                             <div class="form-group">
                                 <label>Data de nascimento</label>
-                                <input type="text" ng-model="form.data_nascimento" class="form-control" required>
+                                <input type="date" ng-model="form.data_nascimento" class="form-control" required>
                                 <p class="help-block">dd/mm/yyyy</p>
                             </div>
 
@@ -66,7 +66,7 @@
 
                             <div class="form-group" ng-if="form.type == 1">
                                 <label>Última avaliação </label>
-                                <input type="file" ng-model="form.anexo_avaliacao" class="form-control">
+                                <input type="text" ng-model="form.anexo_avaliacao" class="form-control">
                             </div>
                         </div>
 
@@ -134,7 +134,7 @@
 
                             <div class="form-group" ng-if="form.graduacao">
                                 <label>Especialidade</label>
-                                <input type="text" ng-model="form.especialidade" class="form-control">
+                                <input type="text" ng-model="form.especialidades" class="form-control">
                             </div>
 
                             <div class="form-group">
@@ -144,13 +144,60 @@
 
                             <div class="form-group" ng-if="form.graduacao">
                                 <label>Imagem do diploma</label>
-                                <input type="file" ng-model="form.anexo_graduacao" class="form-control">
+                                <input type="text" ng-model="form.anexo_graduacao" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <h1>Dados de acesso</h1>
+    
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Usuário</label>
+                                        <input type="email" ng-model="form.email" class="form-control">
+                                    </div>
+                                </div>
                             </div>
 
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Senha</label>
+                                        <input type="password" ng-model="form.senha" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Repita a senha</label>
+                                        <input type="password" ng-model="form.resenha" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Termos de aceitação</label>
+                                <textarea name="" id="" cols="30" rows="10" class="form-control">
+                                Caros amigos, a determinação clara de objetivos não pode mais se dissociar das condições financeiras e administrativas exigidas. Por outro lado, a complexidade dos estudos efetuados é uma das consequências dos níveis de motivação departamental. Assim mesmo, a contínua expansão de nossa atividade possibilita uma melhor visão global do levantamento das variáveis envolvidas. Não obstante, a adoção de políticas descentralizadoras estimula a padronização do orçamento setorial. Do mesmo modo, a estrutura atual da organização garante a contribuição de um grupo importante na determinação das formas de ação. 
+
+                                  A prática cotidiana prova que a necessidade de renovação processual causa impacto indireto na reavaliação das direções preferenciais no sentido do progresso. Nunca é demais lembrar o peso e o significado destes problemas, uma vez que a constante divulgação das informações cumpre um papel essencial na formulação das novas proposições. Gostaria de enfatizar que o início da atividade geral de formação de atitudes apresenta tendências no sentido de aprovar a manutenção dos índices pretendidos. Acima de tudo, é fundamental ressaltar que o surgimento do comércio virtual exige a precisão e a definição do fluxo de informações. 
+
+                                  A certificação de metodologias que nos auxiliam a lidar com a percepção das dificuldades acarreta um processo de reformulação e modernização de todos os recursos funcionais envolvidos. Ainda assim, existem dúvidas a respeito de como a competitividade nas transações comerciais pode nos levar a considerar a reestruturação dos paradigmas corporativos. No entanto, não podemos esquecer que o acompanhamento das preferências de consumo representa uma abertura para a melhoria dos relacionamentos verticais entre as hierarquias. Pensando mais a longo prazo, o desafiador cenário globalizado ainda não demonstrou convincentemente que vai participar na mudança das posturas dos órgãos dirigentes com relação às suas atribuições. 
+
+                                  O que temos que ter sempre em mente é que o entendimento das metas propostas talvez venha a ressaltar a relatividade do retorno esperado a longo prazo. No mundo atual, a consolidação das estruturas aponta para a melhoria dos modos de operação convencionais. O cuidado em identificar pontos críticos no desenvolvimento contínuo de distintas formas de atuação oferece uma interessante oportunidade para verificação do processo de comunicação como um todo. 
+
+                                  Por conseguinte, o fenômeno da Internet maximiza as possibilidades por conta da gestão inovadora da qual fazemos parte. A nível organizacional, a crescente influência da mídia agrega valor ao estabelecimento das diretrizes de desenvolvimento para o futuro. O empenho em analisar o novo modelo estrutural aqui preconizado auxilia a preparação e a composição de alternativas às soluções ortodoxas. </textarea>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" ng-model="form.aceite"> Eu aceito
+                            </div>
+                        </div>
+
                         
                         <div class="col-md-12">
-                            <button type="submit" ng-click="submitForm(form)" class="btn btn-default">Gravar</button>
+                            <button type="submit" ng-disabled="!form.aceite || !form.email" ng-click="submitForm(form)" class="btn btn-default">Gravar</button>
                         </div>
                     </form>
                 </div>

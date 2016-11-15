@@ -10,6 +10,7 @@
     // $http.defaults.headers.common['X-REQUESTED-WITH'] = 'xmlhttprequest';
     // $http.defaults.headers.put["Content-Type"] = "application/json";
     $http.defaults.headers.put["Content-Type"] = "application/x-www-form-urlencoded";
+    // $http.defaults.headers.post["Content-Type"] = "multipart/form-data";
     $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
     $http.defaults.headers.delete["Content-Type"] = "application/x-www-form-urlencoded";
 
@@ -31,10 +32,10 @@
           var data = response.data;
 
           // case error
-          if (data.status) {
-            console.error("Error", data);
-            // todo: emitir uma lerta na tela com o texto que vem na messagem de error
-          }
+          // if (!data.status) {
+          //   console.error("Error", data);
+          //   // todo: emitir uma lerta na tela com o texto que vem na messagem de error
+          // }
 
           // callback
           callback(data);
@@ -46,7 +47,7 @@
             form_data +=key + '=' + data[key] + '&';
         }
         
-        $http({
+        return $http({
             url: urlApi + url,
             method: 'PUT',
             headers: configs.headers,
@@ -61,7 +62,7 @@
             form_data +=key + '=' + data[key] + '&';
         }
 
-        $http({
+        return $http({
             url: urlApi + url,
             method: 'POST',
             data: form_data

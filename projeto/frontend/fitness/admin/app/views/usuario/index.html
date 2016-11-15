@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Usuários</h1>
+            <h1 class="page-header">Profissionais</h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -11,10 +11,29 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Todos usuários
-                <button type="button" ui-sref="dashboard.form_usuario" class="pull-right btn btn-primary btn-circle"><i class="fa fa-plus"></i> </button>
+                Todos os profissionais
+                <!-- <button type="button" ui-sref="dashboard.form_usuario" class="pull-right btn btn-primary btn-circle"><i class="fa fa-plus"></i> </button> -->
             </div>
             <div class="panel-body">
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label>Cidade</label>
+                            <select ng-model="form.cidade" class="form-control" required>
+                                <option value="">Selecione a cidade</option>
+                                <option value="{{city.idcidade}}" ng-repeat="city in listCity">{{city.nome}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label>Nome</label>
+                            <input type="text" ng-model="form.nome" class="form-control" min="3" max="120" step="1" required>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="col-lg-12">
                         
@@ -22,26 +41,30 @@
                             <thead>
                                 <tr>
                                     <th>Nome</th>
-                                    <th>Tipo</th>
+                                    <!-- <th>Tipo</th> -->
                                     <th>Data de cadastro</th>
-                                    <th>Situação</th>
+                                    <!-- <th>Situação</th> -->
                                     <th>Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 
-                                <tr class="odd gradeX" ng-repeat="item in listItens">
+                                <tr class="odd gradeX" ng-repeat="item in listItens | filter:form">
                                     <td>{{item.nome}}</td>
-                                    <td>{{cod_cliente? 'Cliente' : 'Profissional'}}</td>
-                                    <td>{{data_cadastro}}</td>
-                                    <td class="center text-success" ng-class="status? text-success : text-danger">
+                                    <!-- <td>{{(item.codCliente.idCliente? 'Cliente' : 'Profissional')}}</td> -->
+                                    <td>{{item.dataCadastro | datePHP}}</td>
+                                    <!-- <td class="center text-success" ng-class="status? text-success : text-danger">
                                         <strong>{{status? 'Ativo' : 'Inativo'}}</strong>
-                                    </td>
+                                    </td> -->
                                     <td>
-                                        <button type="button" ui-sref="dashboard.form_usuario({ idUsuario: item.idUsuario })" class="btn btn-primary btn-circle"><i class="fa fa-edit"></i>
+                                        <!-- <button type="button" ui-sref="dashboard.form_usuario({ idUsuario: item.idUsuario })" class="btn btn-primary btn-circle"><i class="fa fa-edit"></i></button> -->
+                                        
+                                        
+                                        <!-- <button type="button" ng-click="delete($index, item)" class="btn btn-danger btn-circle"><i class="fa fa-times"></i> -->
+                                        
+                                        <button type="button" ng-if="!item.codCliente.idCliente" ng-click="accept($index, item)" class="btn btn-circle"><i class="fa fa-handshake-o"></i>
                                         </button>
-                                        <button type="button" ng-click="delete($index, item)" class="btn btn-danger btn-circle"><i class="fa fa-times"></i>
-                                        </button>
+
                                     </td>
                                 </tr>
 

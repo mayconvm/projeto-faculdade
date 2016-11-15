@@ -3,23 +3,21 @@
 
   angular.module('sbAdminApp')
 
-  .factory('serviceAvaliacao', ['$http', 'serviceRequestHttp', serviceAvaliacao]);
+  .factory('serviceEstado', ['$http', 'serviceRequestHttp', serviceEstado]);
 
-  function serviceAvaliacao($http, $serviceRequestHttp) {
+  function serviceEstado($http, $serviceRequestHttp) {
 
-    var url = 'avaliacao';
+    var url = 'estado';
     var configs = {}
     
     return {
       getAll: function (callback) { return $serviceRequestHttp.get(url, callback) },
 
       get: function (i, callback) { return $serviceRequestHttp.get(url + '/' + i, callback) },
-      getAgendamento: function (i, callback) { return $serviceRequestHttp.get(url + '?idAgendamento=' + i, callback) },
       insert: function (data) { return $serviceRequestHttp.post(url, data, configs) },
       update: function (data, i) { return $serviceRequestHttp.put(url + '/' + i, data) },
       delete: function (i) {return $serviceRequestHttp.delete(url + '/' + i); }
     }
   }
-
 
 }) ();

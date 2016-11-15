@@ -19,6 +19,7 @@ angular.module('sbAdminApp')
         $scope.selectedMenu = 'dashboard';
         $scope.collapseVar = 0;
         $scope.multiCollapseVar = 0;
+        $scope.usuario = dataUser();
         
         $scope.check = function(x){
           

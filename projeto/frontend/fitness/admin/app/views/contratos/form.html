@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Contratos</h1>
+            <h1 class="page-header">Contrato</h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -24,18 +24,12 @@
 
                             <div class="form-group">
                                 <label>Cliente</label>
-                                <select ng-model="form.id_cliente" class="form-control">
-                                    <option value="">Cliente</option>
-                                    <option value="1">Primeiro Cliente</option>
-                                </select>
+                                <input type="text" ng-model="agendamento.idCliente.nome" class="form-control" readonly="">
                             </div>
 
                             <div class="form-group">
                                 <label>Profissional</label>
-                                <select ng-model="form.id_profissional" class="form-control">
-                                    <option value="">Profissional</option>
-                                    <option value="1">Primeiro Profissional</option>
-                                </select>
+                                <input type="text" ng-model="agendamento.idProfissional.nome" class="form-control" readonly="">
                             </div>
                         </div>
 
@@ -44,7 +38,8 @@
 
                             <div class="form-group">
                                 <label>Descrição</label>
-                                <textarea ng-model="form.descricao_atividades" class="form-control" rows="10"></textarea>
+                                <textarea ng-model="agendamento.especialidade" class="form-control" rows="10" readonly="">
+                                </textarea>
                             </div>
                         </div>
                     </div>
@@ -57,77 +52,68 @@
 
                             <div class="form-group">
                                 <label>Local</label>
-                                <select ng-model="form.local" class="form-control">
-                                    <option value="">Locais</option>
-                                    <option value="1">Primeiro Local</option>
-                                    <option value="0">Outro</option>
-                                </select>
+                                <input type="text" value="{{agendamento.local.observacoes}} / {{agendamento.local.cidade.nome}} - {{agendamento.local.estado.nome}}" class="form-control" readonly="">
                             </div>
 
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-xs-8">
                                         <label>Data</label>
-                                        <input type="text" ng-model="form.data" class="form-control">
+                                        <input type="text" value="{{agendamento.dataHora | datePHP:'D/M/Y'}}" class="form-control" readonly="">
                                     </div>
                                     <div class="col-xs-4">
                                         <label>Hora</label>
-                                        <input type="text" ng-model="form.hora" class="form-control">
+                                        <input type="text" value="{{agendamento.dataHora | datePHP:'hh:mm:ss'}}" class="form-control" readonly="">
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label>Tempo</label>
-                                <input type="text" ng-model="form.duracao_aula" class="form-control">
+                                <input type="text" value="{{agendamento.duracaoAula}}" class="form-control" readonly="">
                             </div>
                         </div>
                         
-                        <!-- DADOS DE ENDEREÇO DO USUÁRIO -->
-                        <div class="col-md-6" ng-if="form.local === '0'">
+                        <div class="col-md-6">
                             
                             <h1>Endereço</h1>
 
                             <div class="form-group">
                                 <label>CEP</label>
-                                <input type="text" ng-model="form.cep" class="form-control">
+                                <input type="text" value="{{agendamento.local.cep}}" class="form-control" readonly="">
                             </div>
 
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-xs-8">
                                         <label>Endereço</label>
-                                        <input type="text" ng-model="form.endereco" class="form-control">
+                                        <input type="text" value="{{agendamento.local.endereco}}" class="form-control" readonly="">
                                     </div>
                                     <div class="col-xs-4">
                                         <label>Número</label>
-                                        <input type="text" ng-model="form.numero" class="form-control">
+                                        <input type="text" value="{{agendamento.local.numero}}" class="form-control" readonly="">
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label>Bairro</label>
-                                <input type="text" ng-model="form.bairro" class="form-control">
+                                <input type="text" value="{{agendamento.local.bairro}}" class="form-control" readonly="">
                             </div>
 
                             <div class="form-group">
                                 <label>Complemento</label>
-                                <input type="text" ng-model="form.complemento" class="form-control">
+                                <input type="text" value="{{agendamento.local.complemento}}" class="form-control" readonly="">
                             </div>
 
                             <div class="form-group">
                                 <label>UF</label>
-                                <select ng-model="form.UF" class="form-control">
-                                    <option value="Selecione um Estado"></option>
-                                </select>
+                                <input type="text" value="{{agendamento.local.estado.nome}}" class="form-control" readonly="">
                             </div>
 
                             <div class="form-group">
                                 <label>Ciadde</label>
-                                <select ng-model="form.cidade" class="form-control">
-                                    <option value="Selecione uma cidade"></option>
-                                </select>
+                                <input type="text" value="{{agendamento.local.cidade.nome}}" class="form-control" readonly="">
                             </div>
                         </div>
                     </div>
@@ -139,32 +125,48 @@
                             
                             <div class="form-group">
                                 <label>Valor</label>
-                                <input type="text" ng-model="form.valor" class="form-control">
+                                <input type="text" ng-model="form.valor" class="form-control" readonly="">
                             </div>
 
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <div class="row">
                                     <div class="col-xs-8">
-                                        <label>Data</label>
-                                        <input type="text" ng-model="form.data_pagamento" class="form-control">
+                                        <label>Data do pagamento</label>
+                                        <input type="date" ng-model="form.dataPagamento" class="form-control">
                                     </div>
                                     <div class="col-xs-4">
                                         <label>Tipo</label>
-                                        <input type="text" ng-model="form.tipo_pagamento" class="form-control">
+                                        <input type="text" ng-value="form.tipo_pagamento" value="PagSeguro" class="form-control">
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-12">
+                    <div class="col-md-12">
                             <div class="form-group">
-                                <label>Regras</label>
-                                <textarea ng-model="form.regras_personline" class="form-control" rows="20"></textarea>
+                                <label>Termos de aceitação</label>
+                                <textarea name="" id="" cols="30" rows="10" class="form-control">
+                                    Caros amigos, a determinação clara de objetivos não pode mais se dissociar das condições financeiras e administrativas exigidas. Por outro lado, a complexidade dos estudos efetuados é uma das consequências dos níveis de motivação departamental. Assim mesmo, a contínua expansão de nossa atividade possibilita uma melhor visão global do levantamento das variáveis envolvidas. Não obstante, a adoção de políticas descentralizadoras estimula a padronização do orçamento setorial. Do mesmo modo, a estrutura atual da organização garante a contribuição de um grupo importante na determinação das formas de ação. 
+
+                                  A prática cotidiana prova que a necessidade de renovação processual causa impacto indireto na reavaliação das direções preferenciais no sentido do progresso. Nunca é demais lembrar o peso e o significado destes problemas, uma vez que a constante divulgação das informações cumpre um papel essencial na formulação das novas proposições. Gostaria de enfatizar que o início da atividade geral de formação de atitudes apresenta tendências no sentido de aprovar a manutenção dos índices pretendidos. Acima de tudo, é fundamental ressaltar que o surgimento do comércio virtual exige a precisão e a definição do fluxo de informações. 
+
+                                  A certificação de metodologias que nos auxiliam a lidar com a percepção das dificuldades acarreta um processo de reformulação e modernização de todos os recursos funcionais envolvidos. Ainda assim, existem dúvidas a respeito de como a competitividade nas transações comerciais pode nos levar a considerar a reestruturação dos paradigmas corporativos. No entanto, não podemos esquecer que o acompanhamento das preferências de consumo representa uma abertura para a melhoria dos relacionamentos verticais entre as hierarquias. Pensando mais a longo prazo, o desafiador cenário globalizado ainda não demonstrou convincentemente que vai participar na mudança das posturas dos órgãos dirigentes com relação às suas atribuições. 
+
+                                  O que temos que ter sempre em mente é que o entendimento das metas propostas talvez venha a ressaltar a relatividade do retorno esperado a longo prazo. No mundo atual, a consolidação das estruturas aponta para a melhoria dos modos de operação convencionais. O cuidado em identificar pontos críticos no desenvolvimento contínuo de distintas formas de atuação oferece uma interessante oportunidade para verificação do processo de comunicação como um todo. 
+
+                                  Por conseguinte, o fenômeno da Internet maximiza as possibilidades por conta da gestão inovadora da qual fazemos parte. A nível organizacional, a crescente influência da mídia agrega valor ao estabelecimento das diretrizes de desenvolvimento para o futuro. O empenho em analisar o novo modelo estrutural aqui preconizado auxilia a preparação e a composição de alternativas às soluções ortodoxas.
+                                </textarea>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" ng-model="form.regras_personline"> Eu aceito
                             </div>
                         </div>
-                    </div>
+
+                        
+                        <div class="col-md-12">
+                            <button type="submit" ng-disabled="!form.regras_personline" ng-click="save(form)" class="btn btn-default">Gravar</button>
+                        </div>
                 </form>
             </div>
         </div>

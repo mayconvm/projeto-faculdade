@@ -11,8 +11,8 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Todos agendamentos
-                <button type="button" ui-sref="dashboard.form_agendamento" class="pull-right btn btn-primary btn-circle"><i class="fa fa-plus"></i> </button>
+                Meus agendamentos
+                <!-- <button type="button" ui-sref="dashboard.form_agendamento" class="pull-right btn btn-primary btn-circle"><i class="fa fa-plus"></i> </button> -->
             </div>
             <div class="panel-body">
                 <div class="row">
@@ -30,40 +30,53 @@
                             </thead>
                             <tbody>
                                 <tr class="odd gradeX" ng-repeat="item in listItens">
-                                    <td>Maycon Vinicius</td>
-                                    <td>Joaquim Barbosa</td>
-                                    <td>12/10/2016 10:10</td>
-                                    <td>Parque central/Belo Horizonte</td>
+                                    <td>{{item.idCliente.nome}}</td>
+                                    <td>{{item.idProfissional.nome}}</td>
+                                    <td>{{item.dataHora | datePHP:"D/M/Y h:mm"}}</td>
+                                    <td>{{item.local.observacoes}}
+                                    /{{item.local.cidade.nome}}-{{item.local.estado.nome}}</td>
                                     <td>
-                                        <button type="button" ui-sref="dashboard.form_agendamento" class="btn btn-primary btn-circle"><i class="fa fa-edit"></i>
-                                        </button>
+                                        <div ng-if="item.status < 2">
 
-                                        <button type="button" ui-sref="dashboard.form_agendamento" class="btn btn-success btn-circle"><i class="fa fa-edit"></i>
-                                        </button>
+                                            <button type="button" ng-if="item.status && usuario.tipo == 2" ui-sref="dashboard.form_contrato({ idAgendamento: item.idAgendamento })" class="btn btn-success btn-circle"><i class="fa fa-edit"></i>
+                                            </button>
 
-                                        <button type="button" ui-sref="dashboard.delete_users" class="btn btn-danger btn-circle"><i class="fa fa-times"></i>
-                                        </button>
+                                            <button type="button" ng-if="item.status" ng-click="cancel(item)" class="btn btn-danger btn-circle"><i class="fa fa-times"></i>
+                                            </button>
+                                        </div>
+
+                                        <div ng-if="item.status == 2">
+                                            <button type="button" ng-if="item.status && usuario.tipo == 1" ng-click="pay(item)" class="btn btn-warning btn-circle"><i class="fa fa-credit-card"></i>
+                                            </button>
+                                        </div>
+
+
+                                        <!-- STATUS PROFISSIONAL -->
+                                        <div ng-if="usuario.tipo == 2">
+                                            <div ng-if="item.status == 2">
+                                                Aguardando pagamento
+                                            </div>
+
+                                            <div ng-if="item.status == 3">
+                                                Pago
+                                            </div>
+
+                                        </div>
+                                        <div ng-if="!item.status">
+                                            Cancelado
+                                        </div>
+
+                                        <div ng-if="item.status == 4">
+                                            Avaliado
+                                        </div>
+
+                                        <div ng-if="item.status == 3">
+                                            <button type="button" ng-if="item.status && usuario.tipo == 1" ui-sref="dashboard.avaliacao_edit({ idAgendamento: item.idAgendamento })" class="btn btn-info btn-circle"><i class="fa fa-star-half-o"></i>
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
 
-                                <tr class="odd gradeX" ng-repeat="item in listItens">
-                                    <td>Maycon Vinicius</td>
-                                    <td>Joaquim Barbosa</td>
-                                    <td>12/10/2016 10:10</td>
-                                    <td>Parque central/Belo Horizonte</td>
-                                    <td>
-                                        <button type="button" ui-sref="dashboard.form_agendamento" class="btn btn-primary btn-circle"><i class="fa fa-edit"></i>
-                                        </button>
-
-                                        <button type="button" ui-sref="dashboard.form_agendamento" class="btn btn-success btn-circle"><i class="fa fa-edit"></i>
-                                        </button>
-
-                                        <button type="button" ui-sref="dashboard.delete_users" class="btn btn-danger btn-circle"><i class="fa fa-times"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-
-                                
                             </tbody>
                         </table>
                     </div>

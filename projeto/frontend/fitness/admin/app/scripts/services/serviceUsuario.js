@@ -11,8 +11,11 @@
     var configs = {}
     
     return {
-      getAll: function (callback) { return $serviceRequestHttp.get(url, callback) },
-
+      getAll: function (callback) { 
+        // pesquisa
+        return $serviceRequestHttp.get(url + '?tipo=2', callback);
+      },
+      login: function (user, pass, callback) { return $serviceRequestHttp.get(url + '?email=' + user + '&senha=' + pass, callback) },
       get: function (i, callback) { return $serviceRequestHttp.get(url + '/' + i, callback) },
       insert: function (data) { return $serviceRequestHttp.post(url, data, configs) },
       update: function (data, i) { return $serviceRequestHttp.put(url + '/' + i, data) },

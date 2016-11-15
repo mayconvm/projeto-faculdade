@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Agendamentos</h1>
+            <h1 class="page-header">Agendamento</h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -11,7 +11,7 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Dados do usuário
+                Formulário de agendamento
             </div>
             <div class="panel-body">
                 <form role="form">
@@ -23,18 +23,12 @@
 
                             <div class="form-group">
                                 <label>Cliente</label>
-                                <select ng-model="form.id_cliente" class="form-control">
-                                    <option value="">Cliente</option>
-                                    <option value="1">Primeiro Cliente</option>
-                                </select>
+                                <input type="text" ng-model="usuario.nome" class="form-control" readonly="">
                             </div>
 
                             <div class="form-group">
                                 <label>Profissional</label>
-                                <select ng-model="form.id_profissional" class="form-control">
-                                    <option value="">Profissional</option>
-                                    <option value="1">Primeiro Profissional</option>
-                                </select>
+                                <input type="text" ng-model="profissional.nome" class="form-control" readonly="">
                             </div>
                         </div>
 
@@ -43,7 +37,7 @@
 
                             <div class="form-group">
                                 <label>Descrição</label>
-                                <textarea ng-model="form.especialidade" class="form-control"></textarea>
+                                <textarea ng-model="form.especialidade" class="form-control" rows="5"></textarea>
                             </div>
                         </div>
                     </div>
@@ -57,8 +51,8 @@
                                 <label>Local</label>
                                 <select ng-model="form.local" class="form-control">
                                     <option value="">Locais</option>
-                                    <option value="1">Primeiro Local</option>
-                                    <option value="0">Outro</option>
+                                    <!-- <option value="0">Outros</option> -->
+                                    <option value="{{local.idLocalDefinido}}" ng-repeat="local in listPlaces">{{local.observacoes}}</option>
                                 </select>
                             </div>
 
@@ -66,19 +60,25 @@
                                 <div class="row">
                                     <div class="col-xs-8">
                                         <label>Data</label>
-                                        <input type="text" ng-model="form.data" class="form-control">
+                                        <input type="date" ng-model="form.data" class="form-control">
                                     </div>
                                     <div class="col-xs-4">
                                         <label>Hora</label>
-                                        <input type="text" ng-model="form.hora" class="form-control">
+                                        <input type="time" ng-model="form.hora" class="form-control">
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label>Tempo</label>
-                                <input type="text" ng-model="form.duracao_aula" class="form-control">
+                                <label>Tempo hora/aula</label>
+                                <input type="number" ng-model="form.duracao_aula" class="form-control">
                             </div>
+
+                            <div class="form-group">
+                                <label>Valor hora/aula</label>
+                                <input type="text" readonly="" value="{{form.duracao_aula}} X {{profissional.codProfissional.valorHoraAula}} = R$ {{form.duracao_aula*profissional.codProfissional.valorHoraAula}}" class="form-control">
+                            </div>
+                            
                         </div>
                         
                         <!-- DADOS DE ENDEREÇO DO USUÁRIO -->
@@ -87,8 +87,13 @@
                             <h1>Endereço</h1>
 
                             <div class="form-group">
+                                <label>Identificação</label>
+                                <input type="text" ng-model="form.localidade.observacoes" class="form-control">
+                            </div>
+
+                            <div class="form-group">
                                 <label>CEP</label>
-                                <input type="text" ng-model="form.cep" class="form-control">
+                                <input type="text" ng-model="form.localidade.cep" class="form-control">
                             </div>
 
                             <div class="form-group">
@@ -106,25 +111,27 @@
 
                             <div class="form-group">
                                 <label>Bairro</label>
-                                <input type="text" ng-model="form.bairro" class="form-control">
+                                <input type="text" ng-model="form.localidade.bairro" class="form-control">
                             </div>
 
                             <div class="form-group">
                                 <label>Complemento</label>
-                                <input type="text" ng-model="form.complemento" class="form-control">
+                                <input type="text" ng-model="form.localidade.complemento" class="form-control">
                             </div>
 
                             <div class="form-group">
                                 <label>UF</label>
-                                <select ng-model="form.UF" class="form-control">
-                                    <option value="Selecione um Estado"></option>
+                                <select ng-model="form.localidade.UF" class="form-control">
+                                    <option value="">Selecione um Estado</option>
+                                    <option value="{{state.idestado}}" ng-repeat="state in listState">{{state.nome}}</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label>Ciadde</label>
-                                <select ng-model="form.cidade" class="form-control">
-                                    <option value="Selecione uma cidade"></option>
+                                <select ng-model="form.localidade.cidade" class="form-control">
+                                    <option value="">Selecione uma cidade</option>
+                                    <option value="{{city.idcidade}}" ng-repeat="city in listCity">{{city.nome}}</option>
                                 </select>
                             </div>
                         </div>
@@ -132,7 +139,7 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            <button type="submit" ng-model="form.submit" class="btn btn-default">Gravar</button>
+                            <button type="submit" ng-disabled="!form.local" ng-click="save(form)" class="btn btn-default">Gravar</button>
                         </div>
                     </div>
                 </form>

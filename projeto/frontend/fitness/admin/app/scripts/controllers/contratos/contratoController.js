@@ -7,7 +7,11 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')
-  .controller('contratoController', ['$scope', 'serviceContrato', function($scope, $serviceContrato) {
+  .controller('contratoController', ['$scope', 'serviceContrato', '$state', function($scope, $serviceContrato, $state) {
+
+    if (!isLogin()) {
+      return $state.go("login", {}, {reload: true});
+    }
       
       $scope.listItens = [{}];
       var service = $serviceContrato;

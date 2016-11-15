@@ -13,8 +13,9 @@ angular
     'ui.router',
     'ui.bootstrap',
     'angular-loading-bar',
+    // 'ngCookies',
   ])
-  .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider','$httpProvider',function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider, $httpProvider) {
+  .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider','$httpProvider', function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider, $httpProvider) {
 
     $httpProvider.defaults.headers.common = {};
     $httpProvider.defaults.headers.post = {};
@@ -32,6 +33,10 @@ angular
     $stateProvider
       .state('dashboard', {
         url:'/dashboard',
+        controller: function($scope) {
+          $scope.usuario = Cookies.getJSON("usuario");
+          // console.log($scope.usuario);
+        },
         templateUrl: 'views/dashboard/main.html',
         resolve: {
             loadMyDirectives:function($ocLazyLoad){
@@ -42,7 +47,24 @@ angular
                     'scripts/directives/header/header.js',
                     'scripts/directives/header/header-notification/header-notification.js',
                     'scripts/directives/sidebar/sidebar.js',
-                    'scripts/directives/sidebar/sidebar-search/sidebar-search.js'
+                    'scripts/directives/sidebar/sidebar-search/sidebar-search.js',
+                    'scripts/filters/datePHP.js',
+                    'scripts/services/serviceRequestHttp.js',
+                    'scripts/services/serviceUsuario.js',
+                    'scripts/services/serviceAvaliacao.js',
+                    'scripts/services/serviceAgendamento.js',
+                    'scripts/services/serviceCidade.js',
+                    'scripts/services/serviceContrato.js',
+                    'scripts/services/serviceLocalidade.js',
+                    'scripts/services/serviceCidade.js',
+                    'scripts/controllers/avaliacao/avaliacaoController.js',
+                    'scripts/controllers/avaliacao/formAvaliacaoController.js',
+                    'scripts/controllers/usuario/usuarioController.js',
+                    'scripts/controllers/usuario/formUsuarioController.js',
+                    'scripts/controllers/contratos/contratoController.js',
+                    'scripts/controllers/contratos/formContratoController.js',
+                    'scripts/controllers/agendamentos/agendamentoController.js',
+                    'scripts/controllers/agendamentos/formAgendamentoController.js',
                     ]
                 }),
                 $ocLazyLoad.load(
@@ -108,9 +130,22 @@ angular
         url:'/blank'
     })
       .state('login',{
+        controller: 'loginController',
         templateUrl:'views/pages/login.html',
-        url:'/login'
-    })
+        url:'/login',
+        resolve: {
+          loadMyFiles:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+              name:'sbAdminApp',
+              files:[
+                'scripts/controllers/loginController.js',
+                'scripts/services/serviceRequestHttp.js',
+                'scripts/services/serviceUsuario.js',
+              ]
+            })
+          }
+        }
+      })
       .state('dashboard.chart',{
         templateUrl:'views/chart.html',
         url:'/chart',
@@ -184,7 +219,7 @@ angular
    .state('dashboard.avaliacao_edit',{
       controller:'formAvaliacaoController',
       templateUrl:'views/avaliacao/form.html',
-      url:'/avaliacao_edit',
+      url:'/avaliacao_edit/:idAgendamento',
       resolve: {
         loadMyFile:function($ocLazyLoad) {
           $ocLazyLoad.load({
@@ -192,6 +227,7 @@ angular
               files:[
                 'scripts/services/serviceRequestHttp.js',
                 'scripts/services/serviceAvaliacao.js',
+                'scripts/services/serviceAgendamento.js',
                 'scripts/controllers/avaliacao/formAvaliacaoController.js',
               ]
           })
@@ -214,6 +250,7 @@ angular
               files:[
                 'scripts/services/serviceRequestHttp.js',
                 'scripts/services/serviceUsuario.js',
+                'scripts/services/serviceCidade.js',
                 'scripts/controllers/usuario/usuarioController.js',
               ]
           })
@@ -246,9 +283,9 @@ angular
    //////////////////
 
    .state('dashboard.agendamento',{
+      url:'/agendamentos',
       controller:'agendamentoController',
       templateUrl:'views/agendamentos/index.html',
-      url:'/agendamentos',
       resolve: {
         loadMyFile:function($ocLazyLoad) {
           $ocLazyLoad.load({
@@ -256,6 +293,7 @@ angular
               files:[
                 'scripts/services/serviceRequestHttp.js',
                 'scripts/services/serviceAgendamento.js',
+                'scripts/services/serviceContrato.js',
                 'scripts/controllers/agendamentos/agendamentoController.js',
               ]
           })
@@ -266,7 +304,7 @@ angular
    .state('dashboard.form_agendamento',{
       controller:'formAgendamentoController',
       templateUrl:'views/agendamentos/form.html',
-      url:'/agendamentos/form',
+      url:'/agendamentos/form/:idAgendamento',
       resolve: {
         loadMyFile:function($ocLazyLoad) {
           $ocLazyLoad.load({
@@ -274,6 +312,9 @@ angular
               files:[
                 'scripts/services/serviceRequestHttp.js',
                 'scripts/services/serviceAgendamento.js',
+                'scripts/services/serviceUsuario.js',
+                'scripts/services/serviceLocalidade.js',
+                'scripts/services/serviceCidade.js',
                 'scripts/controllers/agendamentos/formAgendamentoController.js',
               ]
           })
@@ -307,7 +348,7 @@ angular
    .state('dashboard.form_contrato',{
       controller:'formContratoController',
       templateUrl:'views/contratos/form.html',
-      url:'/contratos/form',
+      url:'/contratos/form/:idAgendamento',
       resolve: {
         loadMyFile:function($ocLazyLoad) {
           $ocLazyLoad.load({
@@ -315,6 +356,7 @@ angular
               files:[
                 'scripts/services/serviceRequestHttp.js',
                 'scripts/services/serviceContrato.js',
+                'scripts/services/serviceAgendamento.js',
                 'scripts/controllers/contratos/formContratoController.js',
               ]
           })
@@ -322,6 +364,28 @@ angular
       }
    })
 
-  }]);
+  }])
+.filter('datePHP', function() {
+  return function (input, opt) {
+    if (!input || !("timestamp" in input) || !input.timestamp) {
+      return;
+    }
 
-    
+    var timeStamp = input.timestamp * 1000;
+    var dateTimeStamp = new Date(timeStamp);
+
+    // format
+    var format = opt || "D/M/Y"
+
+    return moment(dateTimeStamp).format(format);
+  }
+
+});
+
+function dataUser() {
+  return Cookies.getJSON("usuario");
+}
+
+function isLogin() {
+  return dataUser()? true : false;
+}

@@ -7,8 +7,9 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')
-  .controller('formUsuarioController', ['$scope', 'serviceUsuario', '$stateParams', function($scope, $serviceUsuario, $stateParams) {
+  .controller('formUsuarioController', ['$scope', 'serviceUsuario', '$stateParams', '$state', function($scope, $serviceUsuario, $stateParams, $state) {
       var service = $serviceUsuario;
+      $scope.usuario = dataUser();
 
       var type;
       var PROFISSIONAL = 2;
@@ -17,17 +18,34 @@ angular.module('sbAdminApp')
 
       $scope.submitForm = function(form) {
         console.log("FORM", form);
+        var request = undefined;
+
+        // caso a senha não esteja preechida
+        if (!form.senha || !form.resenha || (form.senha !== form.resenha)){
+          return alert("As senhas estão vazias ou diferente.");
+        }
+
+        if (!form.email){
+          return alert("E-mail obrigatório.");
+        }
 
         if (!form.idUsuario) {
           // inser element
-          service.insert(form);
+          request = service.insert(form);
         } else {
           // update
-          service.update(form, form.idUsuario);
+          request = service.update(form, form.idUsuario);
         }
 
+        // request
+        request.success(function() {
+          if ($scope.usuario) {
+            // redireciona para página de listagem
+          } else {
+            $state.go("login");
+          }
+        });
       };
-      
 
       function init() {
         if ('idUsuario' in $stateParams && $stateParams.idUsuario) {
@@ -51,7 +69,9 @@ angular.module('sbAdminApp')
             /////////////////////
             // data_nascimento //
             /////////////////////
-            data.data_nascimento = moment(data.dataNascimento.timestamp * 1000).format("D/M/Y");
+            if (data.dataNascimento) {
+              data.data_nascimento = moment(data.dataNascimento.timestamp * 1000).format("D/M/Y");
+            }
 
             ////////////////////
             //disponibilidade //
@@ -72,7 +92,7 @@ angular.module('sbAdminApp')
             "pagseguro": "mayconvm@pagseguro.com.br",
             "telefone": "(31) 98639-0966",
             "sexo": "1",
-            "data_nascimento": "23/04/1989",
+            "data_nascimento": "1989-04-23",
             "graduacao": 1,
             "especialidade": "Especialista em especialidades",
             "valor_hora_aula": 20,
@@ -83,6 +103,11 @@ angular.module('sbAdminApp')
             "bairro": "Qualquer Bairro",
             "UF": 1,
             "cidade": 1,
+            "email": "cliente@cliente.com",
+            "senha": "cliente",
+            "resenha": "cliente",
+            "anexo_graduacao": "https://ae01.alicdn.com/kf/HTB1RCGtLpXXXXXiaFXXq6xXFXXXw/Sports-font-b-fitness-b-font-models-Andreia-Brazier-dumbbells-font-b-gyms-b-font-athletic.jpg",
+            "anexo_avaliacao": "https://ae01.alicdn.com/kf/HTB1RCGtLpXXXXXiaFXXq6xXFXXXw/Sports-font-b-fitness-b-font-models-Andreia-Brazier-dumbbells-font-b-gyms-b-font-athletic.jpg",
           };
         }
 

@@ -8,14 +8,24 @@
   function serviceAgendamento($http, $serviceRequestHttp) {
 
     var url = 'agendamento';
+    var configs = {}
     
     return {
-      getAll: function (callback) { return $serviceRequestHttp.get(url, callback) },
+      getAll: function (callback) {
+        var usuario = dataUser();
+        var filter = '';
+        if (usuario.tipo == 2) {
+          filter = '?idProfissional=' + usuario.idUsuario;
+        } else {
+          filter = '?idCliente=' + usuario.idUsuario;
+        }
 
-      get: function (i) { return $serviceRequestHttp.get(url + i, configs) },
-      insert: function (data) { return $serviceRequestHttp.put(url, data, configs) },
-      update: function (data, i) { return $serviceRequestHttp.post(url + i, data, configs) },
-      delete: function (i) {return $serviceRequestHttp.delete(url + i, configs)}
+        return $serviceRequestHttp.get(url + filter, callback);
+      },
+      get: function (i, callback) { return $serviceRequestHttp.get(url + '/' + i, callback) },
+      insert: function (data) { return $serviceRequestHttp.post(url, data, configs) },
+      update: function (data, i) { return $serviceRequestHttp.put(url + '/' + i, data) },
+      delete: function (i) {return $serviceRequestHttp.delete(url + '/' + i); }
     }
   }
 
